@@ -1,0 +1,56 @@
+.thnosearch
+{
+	width: 20% !important;
+	padding-bottom: 45px !important;
+}
+.thsearch
+{
+	width: 20%;
+}
+.label-warning {
+    background-color: #ff902b;
+}
+.label {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+.payment{
+    color: rgba(0, 0, 0, 0.87)!important;
+    font-weight: 500;
+}
+.panel-default{
+     border: 1px solid#cfdbe2!important;
+    //  border-color: #cfdbe2;
+     padding-left:1rem;
+}
+.panel-heading{
+    margin-top:1rem ;
+    margin-bottom:1rem;
+}
+.panel{
+    margin-bottom: 21px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.pull-right{
+    display: flex;
+    justify-content: flex-end;
+}
+.btn-warning{
+    color:white!important;
+}
+.details{
+    color: rgba(0, 0, 0, 0.87)!important;
+    font-weight:500;
+    font-size:1rem;
+}

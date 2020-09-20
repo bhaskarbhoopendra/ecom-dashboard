@@ -1,0 +1,141 @@
+<div class="row">
+  <div class="col text-primary">
+    <h2>{{ "Products" | translate }}</h2>
+  </div>
+  <div class="col">
+    <!--Multiple buttons Starts-->
+    <section id="multiple-buttons">
+      <div class="row text-left">
+        <div class="col-sm-12 pull-right">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <button
+                    type="button"
+                    class="btn btn-raised add-button"
+                    [routerLink]="['/addproduct']"
+                    aria-label="Add"
+                  >
+                    <i class="ft-plus"></i> &nbsp;
+                    {{ "Add New Product" | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--Multiple buttons Ends-->
+  </div>
+</div>
+
+<!--table starts-->
+<section id="ng-tables">
+  <div class="row text-left">
+    <div class="col-12">
+      <div class="card">
+        <!-- <div class="row text-left">
+                    <div class="col-12">
+                        <div class="content-header text-center text-primary"> {{'Product Details' | translate}}</div>
+                    </div>
+                </div> -->
+        <div class="card-content">
+          <div class="card-body">
+            <form>
+              <div class="form-group form-inline">
+                <form (keyup)="searchItems(siteName.value)">
+                  <input
+                    class="form-control searchinput filterSearch"
+                    type="text"
+                    name="siteVal"
+                    id="siteVal"
+                    [(ngModel)]="siteVall"
+                    placeholder="Search"
+                    #siteName
+                  />
+                </form>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">{{ "Name" | translate }}</th>
+                      <th scope="col" sortable="Edit">
+                        {{ "Edit" | translate }}
+                      </th>
+                      <th scope="col" sortable="Delete">
+                        {{ "Enable" | translate }}
+                      </th>
+                      <th scope="col" sortable="View">
+                        {{ "View" | translate }}
+                      </th>
+                      <th scope="col">{{ "Image" | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    *ngFor="
+                      let list of ProdData
+                        | paginate
+                          : {
+                              itemsPerPage: 10,
+                              currentPage: p,
+                              totalItems: ProdData.length
+                            };
+                      let i = index
+                    "
+                  >
+                    <tr>
+                      <td scope="row">{{ list.title }}</td>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn btn-raised btn-success"
+                          [routerLink]="['/editproduct/' + list._id]"
+                          aria-label="Edit"
+                        >
+                          <i class="ft-edit-2"></i>
+                        </button>
+                      </td>
+
+                      <td>
+                        <ui-switch
+                          (change)="statusUpdate(list)"
+                          [(ngModel)]="list.status"
+                          name="statt{{ i }}"
+                          #statt="ngModel"
+                        >
+                        </ui-switch>
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-raised btn-secondary"
+                          [routerLink]="['/showproduct/' + list._id]"
+                          type="button"
+                        >
+                          <em _ngcontent-c10="" class="fa fa-eye"></em>
+                        </button>
+                      </td>
+                      <td>
+                        <img [src]="list.imageUrl" style="width: 50px;" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="d-flex justify-content-between p-2">
+                <pagination-controls
+                  (pageChange)="p = $event"
+                ></pagination-controls>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--table ends-->

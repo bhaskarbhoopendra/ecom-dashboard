@@ -1,0 +1,147 @@
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["orders-Orders-module"],{
+
+/***/ "./node_modules/raw-loader/index.js!./src/app/orders/orders.component.html":
+/*!************************************************************************!*\
+  !*** ./node_modules/raw-loader!./src/app/orders/orders.component.html ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\">\n  <div class=\"col\">\n    <h1>Orders</h1>\n  </div>\n  <div class=\"col\">\n    >\n  </div>\n  <!--table starts-->\n  <section id=\"ng-tables\">\n    <div class=\"row text-left\">\n      <div class=\"col-12\">\n        <div class=\"content-header\">Location List</div>\n      </div>\n    </div>\n    <div class=\"row text-left\">\n      <div class=\"col-12\">\n        <div class=\"card\">\n          <div class=\"card-content\">\n            <div class=\"card-body\">\n              <form>\n                <div class=\"form-group form-inline\">\n                  Full text search: <input class=\"form-control ml-2\" type=\"text\" name=\"searchTerm\" />\n                  <span class=\"ml-3\" *ngIf=\"service.loading$ | async\">Loading...</span>\n                </div>\n\n                <div class=\"table-responsive\">\n                  <table class=\"table table-striped\">\n                    <thead>\n                      <tr>\n\n                        <th scope=\"col \">Location Name</th>\n                        <th scope=\"col\">City</th>\n                        <th scope=\"col\">Country</th>\n                        <th scope=\"col\" sortable=\"Edit\">Edit</th>\n                        <th scope=\"col\" sortable=\"Delete\">Delete</th>\n                      </tr>\n                    </thead>\n                    <tbody>\n                      <tr *ngFor=\"let country of countries$ | async\">\n                        <th scope=\"row\">{{ country.id }}</th>\n                        <td>Bangalore</td>\n                        <td>India</td>\n                        <td>\n                          <button type=\"button\" class=\"btn btn-raised btn-success\" [routerLink]=\"['/editlocation']\"\n                            aria-label=\"Edit\">\n                            <i class=\"ft-edit-2\"></i>\n                          </button>\n\n                        </td>\n                        <td>\n                          <button class=\"btn btn-raised btn-danger\" type=\"button\">\n                            <em class=\"fa fa-trash\"></em>\n                          </button>\n                        </td>\n                      </tr>\n                    </tbody>\n                  </table>\n                </div>\n\n                <div class=\"d-flex justify-content-between p-2\">\n                  <ngb-pagination [collectionSize]=\"30\" [(page)]=\"currentPage1\"></ngb-pagination>\n\n                  <select class=\" custom-select\" style=\"width: auto\" name=\"pageSize\">\n                    <option>2 items per page</option>\n                    <option>4 items per page</option>\n                    <option>6 items per page</option>\n                  </select>\n                </div>\n\n              </form>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </section>\n  <!--table ends-->"
+
+/***/ }),
+
+/***/ "./src/app/orders/Orders-routing.module.ts":
+/*!*************************************************!*\
+  !*** ./src/app/orders/Orders-routing.module.ts ***!
+  \*************************************************/
+/*! exports provided: OrdersRoutingModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OrdersRoutingModule", function() { return OrdersRoutingModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _orders_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./orders.component */ "./src/app/orders/orders.component.ts");
+
+
+
+
+const routes = [
+    {
+        path: '',
+        component: _orders_component__WEBPACK_IMPORTED_MODULE_3__["OrdersComponent"],
+        data: {
+            title: 'Orders'
+        },
+    }
+];
+let OrdersRoutingModule = class OrdersRoutingModule {
+};
+OrdersRoutingModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+        imports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forChild(routes)],
+        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]],
+    })
+], OrdersRoutingModule);
+
+
+
+/***/ }),
+
+/***/ "./src/app/orders/Orders.module.ts":
+/*!*****************************************!*\
+  !*** ./src/app/orders/Orders.module.ts ***!
+  \*****************************************/
+/*! exports provided: OrdersModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OrdersModule", function() { return OrdersModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+/* harmony import */ var ng_chartist__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ng-chartist */ "./node_modules/ng-chartist/fesm2015/ng-chartist.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm2015/ng-bootstrap.js");
+/* harmony import */ var _shared_directives_match_height_directive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/directives/match-height.directive */ "./src/app/shared/directives/match-height.directive.ts");
+/* harmony import */ var _Orders_routing_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Orders-routing.module */ "./src/app/orders/Orders-routing.module.ts");
+/* harmony import */ var _orders_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./orders.component */ "./src/app/orders/orders.component.ts");
+
+
+
+
+
+
+
+
+let OrdersModule = class OrdersModule {
+};
+OrdersModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+        imports: [
+            _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+            _Orders_routing_module__WEBPACK_IMPORTED_MODULE_6__["OrdersRoutingModule"],
+            _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_4__["NgbModule"],
+            ng_chartist__WEBPACK_IMPORTED_MODULE_3__["ChartistModule"],
+            _shared_directives_match_height_directive__WEBPACK_IMPORTED_MODULE_5__["MatchHeightModule"]
+        ],
+        exports: [],
+        declarations: [
+            _orders_component__WEBPACK_IMPORTED_MODULE_7__["OrdersComponent"],
+        ],
+        providers: [],
+    })
+], OrdersModule);
+
+
+
+/***/ }),
+
+/***/ "./src/app/orders/orders.component.scss":
+/*!**********************************************!*\
+  !*** ./src/app/orders/orders.component.scss ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL29yZGVycy9vcmRlcnMuY29tcG9uZW50LnNjc3MifQ== */"
+
+/***/ }),
+
+/***/ "./src/app/orders/orders.component.ts":
+/*!********************************************!*\
+  !*** ./src/app/orders/orders.component.ts ***!
+  \********************************************/
+/*! exports provided: OrdersComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OrdersComponent", function() { return OrdersComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+let OrdersComponent = class OrdersComponent {
+    constructor() { }
+    ngOnInit() {
+    }
+};
+OrdersComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-orders',
+        template: __webpack_require__(/*! raw-loader!./orders.component.html */ "./node_modules/raw-loader/index.js!./src/app/orders/orders.component.html"),
+        styles: [__webpack_require__(/*! ./orders.component.scss */ "./src/app/orders/orders.component.scss")]
+    }),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+], OrdersComponent);
+
+
+
+/***/ })
+
+}]);
+//# sourceMappingURL=orders-Orders-module.js.map

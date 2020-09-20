@@ -1,0 +1,149 @@
+<div class="row">
+  <div class="col text-primary">
+    <h2>{{ "Categories" | translate }}</h2>
+  </div>
+  <div class="col">
+    <!--Multiple buttons Starts-->
+    <section id="multiple-buttons">
+      <div class="row text-left">
+        <div class="col-sm-12 pull-right">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <button
+                    type="button"
+                    class="btn btn-raised add-button"
+                    [routerLink]="['/addcategory']"
+                    aria-label="Add"
+                  >
+                    <i class="ft-plus"></i> &nbsp;
+                    {{ "Add New Category" | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--Multiple buttons Ends-->
+  </div>
+</div>
+<!--table starts-->
+<section id="ng-tables">
+  <div class="row text-left">
+    <div class="col-12">
+      <div class="card">
+        <!-- <div class="row text-left">
+                    <div class="col-12">
+                        <div class="content-header text-center text-primary"> {{'Category List' | translate}}</div>
+                    </div>
+                </div> -->
+        <div class="card-content">
+          <div class="card-body">
+            <form>
+              <div class="form-group form-inline">
+                <form (keyup)="searchItems(siteName.value)">
+                  <input
+                    class="form-control searchinput filterSearch"
+                    type="text"
+                    name="siteVal"
+                    id="siteVal"
+                    placeholder="Search"
+                    #siteName
+                  />
+                </form>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col ">{{ "Name" | translate }}</th>
+                      <th scope="col" sortable="Edit">
+                        {{ "Edit" | translate }}
+                      </th>
+                      <!--                      <th scope="col" sortable="Delete">Delete</th>-->
+                      <th scope="col" sortable="View">
+                        {{ "View" | translate }}
+                      </th>
+                      <th scope="col" sortable="View">
+                        {{ "Enable" | translate }}
+                      </th>
+                      <th scope="col">{{ "Image" | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    *ngFor="
+                      let list of catData
+                        | paginate
+                          : {
+                              itemsPerPage: 10,
+                              currentPage: p,
+                              totalItems: catData.length
+                            };
+                      let i = index
+                    "
+                  >
+                    <tr>
+                      <td scope="row">{{ list.title }}</td>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn btn-raised btn-success"
+                          [routerLink]="['/editcategory/' + list._id]"
+                          aria-label="Edit"
+                        >
+                          <i class="ft-edit-2"></i>
+                        </button>
+                      </td>
+                      <!--                      <td>-->
+                      <!--                        <button class="btn btn-raised btn-danger" type="button" (click)="onDeleteProduct(list._id,i)">-->
+                      <!--                          <em class="fa fa-trash"></em>-->
+                      <!--                        </button>-->
+                      <!--                      </td>-->
+                      <td>
+                        <button
+                          class="btn btn-raised btn-secondary"
+                          [routerLink]="['/viewcategory/' + list._id]"
+                          type="button"
+                        >
+                          <em _ngcontent-c10="" class="fa fa-eye"></em>
+                        </button>
+                      </td>
+                      <td>
+                        <ui-switch
+                          (change)="statusUpdate(list)"
+                          [(ngModel)]="list.status"
+                          name="stat{{ i }}"
+                          #stat="ngModel"
+                        ></ui-switch>
+                      </td>
+                      <td>
+                        <img [src]="list.imageUrl" style="width: 50px;" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="d-flex justify-content-between p-2">
+                <pagination-controls
+                  (pageChange)="p = $event"
+                ></pagination-controls>
+
+                <!-- <select class=" custom-select" style="width: auto" name="pageSize">
+                                  <option>2 items per page</option>
+                                  <option>4 items per page</option>
+                                  <option>6 items per page</option>
+                                </select> -->
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--table ends-->

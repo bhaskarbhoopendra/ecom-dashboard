@@ -1,0 +1,268 @@
+<div class="row">
+    <div class="col-md-12 text-primary">
+        <h2>Orders</h2>
+    </div>
+    <div class="panel panel-default container">
+        <div class="row">
+            <div class="panel-heading col-md-10">
+                {{ "Orders Details" | translate }}
+            </div>
+            <button
+                    class="btn btn-outline-dark mt-2"
+                    (click)="openDateSelectModal(orderExportModal)"
+            >
+                {{ "exp-order" | translate }}
+            </button>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <input
+                        class="form-control"
+                        type="number"
+                        placeholder="{{ 'search-order' | translate }}"
+                        [(ngModel)]="orderId"
+                />
+            </div>
+            <div class="col-md-2">
+                <button
+                        class="btn btn-primary"
+                        type="button"
+                        (click)="findOrderById()"
+                        [disabled]="!orderId"
+                        style="color: white !important;"
+                        *ngIf="ordersData.length === orders.length"
+                >
+                    Search
+                </button>
+                <button
+                        class="btn btn-primary"
+                        type="button"
+                        (click)="resetFilter()"
+                        style="color: white !important;"
+                        *ngIf="ordersData.length !== orders.length"
+                >
+                    Clear
+                </button>
+            </div>
+            <div class="col-md-3">
+                <select
+                        class="form-control"
+                        (change)="filterByStatus(status.value)"
+                        #status
+                >
+                    <option disabled translate>filter-status</option>
+                    <option value="All" translate>all</option>
+                    <option value="Pending">{{ "Pending" | translate }}</option>
+                    <option value="Confirmed"> {{ "Confirmed" | translate }}</option>
+                    <option value="Out for delivery"
+                    >{{ "Out for delivery" | translate }}
+                    </option>
+                    <option value="Cancelled"> {{ "Cancelled" | translate }}</option>
+                    <option value="DELIVERED">{{ "DELIVERED" | translate }} </option>
+                </select>
+            </div>
+        </div>
+        <div class="table-responsive b0">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="text-center">
+                        <strong>{{ "Order Id" | translate }}</strong>
+                    </th>
+                    <th class="text-center">
+                        <strong>{{ "Name" | translate }}</strong>
+                    </th>
+                    <th class="text-center">
+                        <strong>{{ "Status" | translate }}</strong>
+                    </th>
+                    <th class="text-center">
+                        <strong>{{ "Total" | translate }}</strong>
+                    </th>
+                    <th class="text-center">
+                        <strong>{{ "payment-status" | translate }}</strong>
+                    </th>
+                    <th class="text-center">
+                        <strong>{{ "Action" | translate }}</strong>
+                    </th>
+                    <th class="text-center">
+                        <strong>{{ "Assign" | translate }}</strong>
+                    </th>
+                    <th class="text-center">
+                        <strong>{{ "time-slot" | translate }}</strong>
+                    </th>
+                    <th class="text-center">
+                        <strong>{{ "View" | translate }}</strong>
+                    </th>
+                </tr>
+                </thead>
+                <tbody
+                        *ngFor="
+            let list of ordersData
+              | paginate
+                : {
+                    itemsPerPage: 10,
+                    currentPage: p,
+                    totalItems: ordersData.length
+                  };
+            let i = index
+          "
+                >
+                <tr class="text-center">
+                    <td>{{ list.orderID }}</td>
+                    <td>{{ list.user ? list.user.firstName : "" }}</td>
+
+                    <td class="text-center">
+              <span
+                      class="label label-warning"
+                      [ngClass]="
+                  list.orderStatus === 'Pending'
+                    ? 'label-warning'
+                    : list.orderStatus === 'Confirmed'
+                    ? 'label-purple'
+                    : list.orderStatus === 'Out for delivery'
+                    ? 'label-onway'
+                    : list.orderStatus === 'DELIVERED'
+                    ? 'label-success'
+                    : 'label-danger'
+                "
+              >{{ list.orderStatus }}</span
+              >
+                    </td>
+                    <td>
+                        {{ list.grandTotal | currency: currencyCode:"symbol":"1.2-2" }}
+                    </td>
+                    <td>{{ list.paymentType === "CARD" ? "Success" : "Pending" }}</td>
+
+                    <td class="text-center">
+                        <select
+                                class="input-sm form-control"
+                                name="updatestats"
+                                [ngModel]="list.orderStatus"
+                                (change)="onChangeStatus($event, list._id)"
+                                [disabled]="
+                  list.orderStatus === 'DELIVERED' ||
+                  list.orderStatus === 'Cancelled'
+                "
+                        >
+                            <option disabled>{{ "Select Status" | translate }}</option>
+                            <option value="Pending" disabled>{{
+                                "Pending" | translate
+                                }}</option>
+                            <option
+                                    value="Confirmed"
+                                    [disabled]="list.orderStatus !== 'Pending'"
+                            >
+                                {{ "Confirmed" | translate }}</option
+                            >
+                            <option value="Out for delivery" [disabled]="list.orderStatus !== 'Confirmed'"
+                            >{{ "Out for delivery" | translate }}
+                            </option>
+                            <option value="DELIVERED"
+                                    [disabled]="list.orderStatus !== 'Out for delivery'">{{ "DELIVERED" | translate }}</option>
+                            <option value="Cancelled">
+                                {{ "Cancelled" | translate }}
+                            </option>
+                        </select>
+                    </td>
+                    <td class="text-center">
+                        <select
+                                class="form-control"
+                                *ngIf="list.orderStatus === 'Confirmed' && !list.orderAssigned"
+                                (change)="assignOrder(list._id, $event.target.value)"
+                                ngModel
+                        >
+                            <option disabled>{{
+                                "Select delivery boy" | translate
+                                }}</option>
+                            <option *ngFor="let boy of deliveryBoys" [value]="boy._id">
+                                {{ boy.firstName }}&nbsp;{{ boy.lastName }}</option
+                            >
+                        </select>
+                        <p class="text-info" *ngIf="list.orderAssigned">
+                            {{ "Assigned to" | translate }} {{ list.assignedTo.firstName }}
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-info">
+                            {{ list.deliveryTime }}
+                        </p>
+                        <br/>
+                        <p class="text-info">
+                            {{ list.deliveryDate }}
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <button
+                                class="btn btn-raised btn-secondary"
+                                [routerLink]="['/vieworder/' + list._id]"
+                                type="button"
+                        >
+                            <em _ngcontent-c10="" class="fa fa-eye"></em>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-between p-2">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+
+
+        <div class="panel-footer">
+            <div class="row"></div>
+        </div>
+    </div>
+</div>
+<ng-template #orderExportModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title" translate>exp-order</h4>
+    </div>
+    <form (ngSubmit)="exportOrder()" #orderExportForm="ngForm">
+        <div class="modal-body">
+            <div class="form-group">
+                <label translate>start-date</label>
+                <div class="input-group">
+                    <input
+                            class="form-control"
+                            [(ngModel)]="startDate"
+                            [displayMonths]="1"
+                            name="startDate"
+                            ngbDatepicker
+                            required
+                            #dp="ngbDatepicker"
+                            (click)="dp.toggle()"
+                    />
+                </div>
+            </div>
+            <div class="form-group">
+                <label translate>end-date</label>
+                <div class="input-group">
+                    <input
+                            class="form-control"
+                            [disabled]="!startDate"
+                            [minDate]="startDate"
+                            [(ngModel)]="endDate"
+                            name="endDate"
+                            ngbDatepicker
+                            required
+                            #dp2="ngbDatepicker"
+                            (click)="dp2.toggle()"
+                    />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="Close" class="btn btn-outline-dark" (click)="closeModal()">
+                {{ "Cancel" | translate }}
+            </button>
+            <button
+                    type="submit"
+                    class="btn btn-outline-success"
+                    [disabled]="orderExportForm.invalid"
+            >
+                {{ "Save" | translate }}
+            </button>
+        </div>
+    </form>
+</ng-template>

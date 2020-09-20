@@ -1,0 +1,152 @@
+<div class="row text-left">
+    <div class="col-sm-12">
+        <div class="content-header text-center text-primary">{{'Add Coupon'| translate}}</div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card ">
+            <div class="card-header pb-2">
+
+
+            </div>
+            <div class="card-content">
+                <div class="px-3">
+                    <div class="form">
+                        <form #f="ngForm" (ngSubmit)="onSubmitCoupon(f)">
+                            <div class="form-body">
+                                <!-- <div>
+                                    <h4>{{'Add Coupon'| translate}}</h4>
+                                </div> -->
+
+
+                                <div class="form-group">
+                                    <label for="couponCode">{{'Coupon Code'| translate}}</label>
+                                    <input type="text" id="couponCode" class="form-control" name="copcode"
+                                        [(ngModel)]="addCoupon.couponCode" #copcode="ngModel" required>
+                                    <span class="help-block" *ngIf="copcode?.touched && copcode?.errors?.required"
+                                        style="color:red">
+                                        <small>{{'This field is required*'| translate}}</small>
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="projectinput8">{{'Description'| translate}}</label>
+                                    <textarea id="projectinput8" rows="5" class="form-control" name="desc"
+                                        [(ngModel)]="addCoupon.description" #desc="ngModel" required></textarea>
+                                    <span class="help-block" *ngIf="desc?.touched && desc?.errors?.required"
+                                        style="color:red">
+                                        <small>{{'This field is required*'| translate}}</small>
+                                    </span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="couponTypeField">{{'Coupon Type'| translate}}</label>
+                                    <select class="form-control" id="couponTypeField" [(ngModel)]="addCoupon.couponType"
+                                        name="couponType" required #copType="ngModel">
+                                        <option disabled>{{'Select coupon type'| translate}}</option>
+                                        <option value="PERCENTAGE">{{'Percentage'| translate}}</option>
+                                        <option value="FLAT">{{'Amount'| translate}}</option>
+                                    </select>
+                                    <span class="help-block" *ngIf="copType?.touched && copType?.errors?.required"
+                                        style="color:red">
+                                        <small>{{'This field is required*'| translate}}</small>
+                                    </span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="issueinput6"> {{'Offer Percentage/Amount'| translate}}</label>
+                                    <input type="text" id="issueinput6" class="form-control"
+                                        placeholder="Enter the Deal Offer(in percentage)" name="title"
+                                        [(ngModel)]="addCoupon.offerValue" #title="ngModel" required>
+                                    <!-- <select id="issueinput6" name="offper" class="form-control" data-toggle="tooltip" data-trigger="hover"
+                                      data-placement="top" data-title="Status" [(ngModel)]="addCoupon.offerPercentage" #offper="ngModel"
+                                      required>
+                                      <option disabled>Select Offer Percentage </option>
+                                      <option *ngFor="let offer of offerPercentage">{{offer}}</option>
+                                    </select> -->
+                                    <span class="help-block" *ngIf="title?.touched && title?.errors?.required"
+                                        style="color:red">
+                                        <small>{{'This field is required*'| translate}}</small>
+                                    </span>
+                                </div>
+
+                                <div class="row text-left" matchHeight="card">
+                                    <!--Datepicker in a popup starts-->
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="card">
+                                            <label>{{'Start Date'| translate}}</label>
+
+
+                                            <form class="form-inline">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input class="form-control" placeholder="yyyy-mm-dd" name="dp"
+                                                            ngbDatepicker #d1="ngbDatepicker" style=padding-right:16rem
+                                                            [(ngModel)]="startDate" [min]="couponDate" #dp="ngModel">
+
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text" (click)="d1.toggle()">
+                                                                <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                <!-- <span class="help-block" *ngIf="dp?.touched && dp?.errors?.required" style="color:red">Please
+                                                  select coupon start date*</span> -->
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!--Datepicker in a popup ends-->
+                                </div>
+
+
+                                <div class="row text-left" matchHeight="card">
+                                    <!--Datepicker in a popup starts-->
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="card">
+                                            <label>{{'Expiry date'| translate}}</label>
+
+
+                                            <form class="form-inline">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input class="form-control" placeholder="yyyy-mm-dd" name="dp1"
+                                                            ngbDatepicker #d2="ngbDatepicker" style=padding-right:16rem
+                                                            [(ngModel)]="endDate" [min]="couponDate" #dp1="ngModel">
+
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text" (click)="d2.toggle()">
+                                                                <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <span class="help-block" *ngIf="dp1?.touched && dp1?.errors?.required" style="color:red">Please
+                                                  select coupon end date*</span> -->
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!--Datepicker in a popup ends-->
+                                </div>
+                            </div>
+
+                            <div class=" form-actions">
+                                <button type="submit" class="btn btn-raised btn-raised add-modules mr-2"
+                                    [disabled]="f.invalid">
+                                    <i class="fa fa-check-square-o"></i> {{'Submit'| translate}}
+                                </button>
+                                <button type="button" (click)="cancel()"
+                                    class="btn btn-raised btn-raised btn-warning mr-1">
+                                    <i class="ft-x"></i> {{'Cancel'| translate}}
+                                </button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>

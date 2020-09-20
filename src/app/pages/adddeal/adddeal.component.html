@@ -1,0 +1,184 @@
+<div class="row text-left">
+  <div class="col-sm-12">
+    <div class="content-header text-center text-primary">
+      {{ "Add Deal" | translate }}
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header pb-2"></div>
+      <div class="card-content">
+        <div class="px-3">
+          <form class="form" #f="ngForm" (ngSubmit)="onSubmitDeals(f)">
+            <div class="form-body">
+              <div class="form-group">
+                <label>{{ "Deal Type" | translate }}</label>
+                <select
+                  class="form-control"
+                  name="dealType"
+                  [(ngModel)]="addDeals.delalType"
+                  required
+                >
+                  <option disabled>{{ "Deal type" | translate }}</option>
+                  <option value="Category">{{ "Category" | translate }}</option>
+                  <option value="Product">{{ "Product" | translate }}</option>
+                </select>
+              </div>
+              <div class="form-group" *ngIf="addDeals.delalType === 'Category'">
+                <label>{{ "Select Category" | translate }}</label>
+                <ng-select
+                  [items]="catData"
+                  [(ngModel)]="addDeals.category"
+                  name="category"
+                  [bindLabel]="'title'"
+                  [bindValue]="'_id'"
+                  [multiple]="false"
+                  required
+                >
+                </ng-select>
+              </div>
+
+              <div class="form-group" *ngIf="addDeals.delalType === 'Product'">
+                <label>{{ "Select Products" | translate }}</label>
+
+                <ng-select
+                  [items]="prodData"
+                  [(ngModel)]="addDeals.product"
+                  name="products"
+                  [bindLabel]="'title'"
+                  [bindValue]="'_id'"
+                  [multiple]="false"
+                  required
+                >
+                </ng-select>
+              </div>
+
+              <div class="form-group">
+                <label>{{ "Title" | translate }}</label>
+                <input
+                  type="text"
+                  id="companyName23"
+                  class="form-control"
+                  placeholder="Enter the title name"
+                  name="title"
+                  [(ngModel)]="addDeals.name"
+                  #title="ngModel"
+                  required
+                />
+                <span
+                  class="help-block"
+                  *ngIf="title?.touched && title?.errors?.required"
+                  style="color: red;"
+                >
+                  <small>{{ "This field is required*" | translate }}</small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label>{{ "Deal Offer" | translate }}</label>
+                <input
+                  type="number"
+                  id="companyName231"
+                  class="form-control"
+                  placeholder="Enter the Deal Offer(in percentage)"
+                  name="deal-title"
+                  [(ngModel)]="addDeals.delaPercent"
+                  #title="ngModel"
+                  required
+                />
+                <!-- <select id="issueinput6" name="status" class="form-control" data-toggle="tooltip" data-trigger="hover"
+                                  data-placement="top" data-title="Status" [(ngModel)]="addDeals.dealOffer" name="deal" #deal="ngModel"
+                                  required>
+                                  <option disabled>Select Deal Offers </option>
+                                  <option *ngFor="let offer of dealOffer">{{offer}}</option>
+                                </select> -->
+                <span
+                  class="help-block"
+                  *ngIf="title?.touched && title?.errors?.required"
+                  style="color: red;"
+                >
+                  <small>{{ "This field is required*" | translate }}</small>
+                </span>
+              </div>
+              <div class="form-control" class="form-group">
+                <label>{{ "top-deal" | translate }}</label>
+                <select class="form-control" name="topDeal" [(ngModel)]="addDeals.topDeal" required>
+                  <option disabled>{{ "top-deal" | translate }}</option>
+                  <option [ngValue]="true">True</option>
+                  <option [ngValue]="false">False</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="projectinput8">{{
+                  "Description" | translate
+                }}</label>
+                <textarea
+                  id="projectinput8"
+                  rows="5"
+                  class="form-control"
+                  placeholder="Enter the description"
+                  name="desc"
+                  [(ngModel)]="addDeals.description"
+                  #desc="ngModel"
+                  required
+                ></textarea>
+                <span
+                  class="help-block"
+                  *ngIf="desc?.touched && desc?.errors?.required"
+                  style="color: red;"
+                >
+                  <small>{{ "This field is required*" | translate }}</small>
+                </span>
+              </div>
+
+              <div class="row form-label-group">
+                <div class="col-3">
+                  <label>{{ "Select File:" | translate }}</label>
+                </div>
+                <div class="col-8">
+                  <div class="mb-4">
+                    <img
+                      src="{{ url1 }}"
+                      class="doctors-img img-fluid"
+                      alt="example placeholder avatar"
+                    />
+                  </div>
+                  <button class="btn btn-info button-upload" type="button">
+                    <i class="fa fa-upload" aria-hidden="true"></i> Upload file
+                  </button>
+                  <input
+                    type="file"
+                    class="upload file-upload"
+                    accept="image/*"
+                    (change)="readUrl1($event)"
+                    name="image"
+                  />
+                  <p>Best resolution 432px*585px</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button
+                type="submit"
+                class="btn btn-raised btn-raised add-modules mr-2"
+                [disabled]="f.invalid || isDisabled"
+              >
+                <i class="fa fa-check-square-o"></i> {{ "Submit" | translate }}
+              </button>
+              <button
+                type="button"
+                (click)="cancel()"
+                class="btn btn-raised btn-raised btn-warning mr-1"
+              >
+                <i class="ft-x"></i> {{ "Cancel" | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,114 @@
+<div class="row text-left">
+  <div class="col-sm-12">
+    <div class="content-header text-center text-primary">Add New Location</div>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card ">
+      <div class="card-header pb-2">
+
+
+      </div>
+      <div class="card-content">
+        <div class="px-3">
+          <form class="form" #f="ngForm" (ngSubmit)="onSubmitLoc()">
+
+            <div class="form-body">
+              <!-- <div>
+                <h4>Add Location</h4>
+              </div> -->
+
+              <div class="form-group">
+                <label for="companyName">Location Name</label>
+                <input type="text" id="companyName" placeholder="Enter Location Name" class="form-control" name="name"
+                  [(ngModel)]="addLoc.locationName" #name="ngModel" required>
+                <span class="help-block" *ngIf="name?.touched && name?.errors?.required" style="color:red">
+                  <small>Please Enter this Field*</small>
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="companyName">Building No</label>
+                <input type="text" id="companyName" placeholder="Enter Building No" class="form-control" name="buildno"
+                  [(ngModel)]="addLoc.buildingNo" #buildno="ngModel" required>
+                <span class="help-block" *ngIf="buildno?.touched && buildno?.errors?.required" style="color:red">
+                  <small>Please Enter this Field*</small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="companyName">Building Name</label>
+                <input type="text" id="companyName" placeholder="Enter Building Name " class="form-control" name="build"
+                  [(ngModel)]="addLoc.buildingName" #build="ngModel" required>
+                <span class="help-block" *ngIf="build?.touched && build?.errors?.required" style="color:red">
+                  <small>Please Enter this Field*</small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="companyName">Street</label>
+                <input type="text" id="companyName" placeholder="Enter Street " class="form-control" name="strr"
+                  [(ngModel)]="addLoc.street" #strr="ngModel" required>
+                <span class="help-block" *ngIf="strr?.touched && strr?.errors?.required" style="color:red">
+                  <small>Please Enter this Field*</small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="companyName">Locality</label>
+                <input type="text" id="companyName" placeholder="Enter Locality " class="form-control" name="loc"
+                  [(ngModel)]="addLoc.locality" #loc="ngModel" required>
+                <span class="help-block" *ngIf="loc?.touched && loc?.errors?.required" style="color:red">
+                  <small>Please Enter this Field*</small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="companyName">City</label>
+                <input type="text" id="companyName" placeholder="Enter City " class="form-control" name="citym"
+                  [(ngModel)]="addLoc.city" #citym="ngModel" required>
+                <span class="help-block" *ngIf="citym?.touched && citym?.errors?.required" style="color:red">
+                  <small>Please Enter this Field*</small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="companyName">State</label>
+                <input type="text" id="companyName" placeholder="Enter State" class="form-control" name="stat"
+                  [(ngModel)]="addLoc.state" #stat="ngModel" required>
+                <span class="help-block" *ngIf="stat?.touched && stat?.errors?.required" style="color:red">
+                  <small>Please Enter this Field*</small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="companyName">Country</label>
+                <input type="text" id="companyName" placeholder="Enter Country " class="form-control" name="count"
+                  [(ngModel)]="addLoc.country" #count="ngModel" required>
+                <span class="help-block" *ngIf="count?.touched && count?.errors?.required" style="color:red">
+                  <small>Please Enter this Field*</small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="companyName">Postal Code</label>
+                <input type="text" id="companyName" placeholder="Enter Postal Code " class="form-control" name="post"
+                  [(ngModel)]="addLoc.postalCode" #post="ngModel" required>
+                <span class="help-block" *ngIf="post?.touched && post?.errors?.required" style="color:red">
+                  <small>Please Enter this Field*</small>
+                </span>
+              </div>
+            </div>
+
+            <div class="form-actions">
+
+
+
+              <button type="submit" class="btn btn-raised btn-raised add-modules mr-2" [disabled]="f.invalid">
+                <i class="fa fa-check-square-o"></i> Submit
+              </button>
+              <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="onCancel()">
+                <i class="ft-x"></i> Cancel
+              </button>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

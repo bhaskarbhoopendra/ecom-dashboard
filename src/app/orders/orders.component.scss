@@ -1,0 +1,60 @@
+.label-warning {
+  background-color: #ff902b;
+}
+
+.label-danger {
+  background-color: #f35d23;
+}
+
+.label-onway {
+  background-color: #1ac59e;
+}
+
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+
+.label-purple {
+  background-color: #7266ba;
+}
+
+.label-success {
+  background-color: #27c24c;
+}
+
+.panel {
+  margin-bottom: 21px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.panel-default {
+  border: 1px solid #cfdbe2 !important;
+  //  border-color: #cfdbe2;
+  padding-left: 1rem;
+}
+
+.panel-heading {
+  margin: 1rem 0;
+}
+
+.text-primary {
+  font-size: 24px;
+  margin-bottom: 1rem;
+}
+
+strong {
+  color: #212529;
+  font-weight: 500;
+}

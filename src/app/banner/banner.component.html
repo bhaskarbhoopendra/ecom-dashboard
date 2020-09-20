@@ -1,0 +1,272 @@
+<div class="row">
+  <div class="col text-primary">
+    <h2>{{ "Banner" | translate }}</h2>
+  </div>
+  <div class="col">
+    <!--Multiple buttons Starts-->
+    <section id="multiple-buttons">
+      <div class="row text-left">
+        <div class="col-sm-12 pull-right">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <button
+                    type="button"
+                    class="btn btn-raised add-button"
+                    aria-label="Add"
+                    (click)="openAddBannerModal(saveBannerModal, null)"
+                  >
+                    <i class="ft-plus"></i> &nbsp;{{
+                      "Add New Banner" | translate
+                    }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--Multiple buttons Ends-->
+  </div>
+</div>
+<!--table starts-->
+<section id="ng-tables">
+  <div class="row text-left">
+    <div class="col-12">
+      <div class="card">
+        <!-- <div class="row text-left">
+          <div class="col-12">
+            <div class="content-header text-center text-primary">
+              {{ "Banner List" | translate }}
+            </div>
+          </div>
+        </div> -->
+        <div class="card-content">
+          <div class="card-body">
+            <form>
+              <!--                            <div class="form-group form-inline">-->
+              <!--                                Full text search:-->
+              <!--                                <form>-->
+              <!--                                    <input class="form-control searchinput" type="text" name="siteVal" id="siteVal"-->
+              <!--                                           placeholder="Search" #siteName>-->
+              <!--                                </form>-->
+              <!--                            </div>-->
+
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col ">{{ "Title" | translate }}</th>
+                      <th scope="col ">{{ "Description" | translate }}</th>
+                      <th scope="col ">{{ "Category" | translate }}</th>
+                      <th scope="col ">{{ "Product" | translate }}</th>
+                      <th scope="col" sortable="Edit">
+                        {{ "Edit" | translate }}
+                      </th>
+                      <th scope="col" sortable="Delete">
+                        {{ "Delete" | translate }}
+                      </th>
+                      <th scope="col">{{ "Image" | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    *ngFor="
+                      let list of bannerList
+                        | paginate
+                          : {
+                              itemsPerPage: pageLimit,
+                              currentPage: pageNumber,
+                              totalItems: totalRecords
+                            };
+                      let i = index
+                    "
+                  >
+                    <tr>
+                      <td scope="row">{{ list.title }}</td>
+                      <td scope="row">{{ list.description }}</td>
+                      <td scope="row">
+                        {{
+                          list.bannerType === "Category"
+                            ? list.category
+                              ? list.category.title
+                              : "-"
+                            : "-"
+                        }}
+                      </td>
+                      <td scope="row">
+                        {{
+                          list.bannerType === "Product"
+                            ? list.product
+                              ? list.product.title
+                              : "-"
+                            : "-"
+                        }}
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn btn-raised btn-success"
+                          (click)="openAddBannerModal(saveBannerModal, list)"
+                        >
+                          <i class="ft-edit-2"></i>
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-raised btn-danger"
+                          type="button"
+                          (click)="deleteBanner(list._id)"
+                        >
+                          <em class="fa fa-trash"></em>
+                        </button>
+                      </td>
+                      <td>
+                        <img [src]="list.imageURL" style="width: 50px;" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="d-flex justify-content-between p-2">
+                <pagination-controls
+                  (pageChange)="pageNumber = $event; getBannerList()"
+                >
+                </pagination-controls>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--table ends-->
+<ng-template #saveBannerModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ "Add Banner" | translate }}
+    </h4>
+  </div>
+  <form (ngSubmit)="saveAndUpdateBannerInfo()" #bannerSaveForm="ngForm">
+    <div class="modal-body">
+      <div class="form-group">
+        <label>{{ "Title" | translate }}</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            [(ngModel)]="bannerData.title"
+            placeholder="Enter banner title"
+            name="title"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>{{ "Description" | translate }}</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="Enter banner description"
+            [(ngModel)]="bannerData.description"
+            name="description"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>{{ "Banner for" | translate }}</label>
+        <select
+          class="form-control"
+          name="bannerFor"
+          [(ngModel)]="bannerData.bannerType"
+          (change)="bannerData.category = null; bannerData.product = null"
+          required
+        >
+          <option disabled>{{ "Select option" | translate }}</option>
+          <option value="Category">{{ "Category" | translate }}</option>
+          <option value="Product">{{ "Product" | translate }}</option>
+        </select>
+      </div>
+      <div class="form-group" *ngIf="bannerData.bannerType === 'Category'">
+        <label>{{ "Category" | translate }}</label>
+        <ng-select
+          [items]="categories"
+          bindLabel="title"
+          bindValue="_id"
+          [(ngModel)]="bannerData.category"
+          name="category"
+          required
+          #couCat="ngModel"
+        ></ng-select>
+        <span
+          class="help-block"
+          *ngIf="couCat?.touched && couCat?.errors?.required"
+          style="color: red;"
+          ><small>{{ "This field is required*" | translate }}</small>
+        </span>
+      </div>
+
+      <div class="form-group" *ngIf="bannerData.bannerType === 'Product'">
+        <label>{{ "Products" | translate }}</label>
+        <ng-select
+          [items]="products"
+          [bindLabel]="'title'"
+          [bindValue]="'_id'"
+          [(ngModel)]="bannerData.product"
+          name="products"
+          required
+          #coupPro="ngModel"
+        ></ng-select>
+        <span
+          class="help-block"
+          *ngIf="coupPro?.touched && coupPro?.errors?.required"
+          style="color: red;"
+          ><small>{{ "This field is required*" | translate }}</small>
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label>{{ "Image" | translate }}</label>
+
+        <div class="input-group">
+          <button class="btn btn-info button-upload" type="button">
+            <i class="fa fa-upload" aria-hidden="true"></i> Upload file
+          </button>
+          <input
+            class="form-control file-upload"
+            placeholder="Select file"
+            type="file"
+            accept="image/*"
+            ng2FileSelect
+            [uploader]="uploader"
+            (change)="uploadImage()"
+            name="title"
+            required
+          />
+        </div>
+
+        <p>Best resolution 400px*400px</p>
+        <img
+          [src]="bannerData.imageURL"
+          *ngIf="bannerData.imageURL"
+          style="width: 100%; height: 100%;"
+        />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="Close" class="btn btn-outline-dark" (click)="closeModal()">
+        {{ "Cancel" | translate }}
+      </button>
+      <button
+        type="submit"
+        class="btn btn-outline-success"
+        [disabled]="bannerSaveForm.invalid || !isImageSelected || isDisabled"
+      >
+        {{ "Save" | translate }}
+      </button>
+    </div>
+  </form>
+</ng-template>

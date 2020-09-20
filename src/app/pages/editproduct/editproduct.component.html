@@ -1,0 +1,166 @@
+<div class="row text-left">
+    <div class="col-sm-12">
+        <div class="content-header text-center text-primary">{{'Update Product' | translate}}</div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card ">
+            <div class="card-header pb-2"></div>
+            <div class="card-content">
+                <div class="px-3">
+                    <form class="form" #f="ngForm" (ngSubmit)="updateProduct()">
+                        <div class="form-body">
+                            <!-- <div>
+                                <h4>{{'Update Product' | translate}}</h4>
+                            </div> -->
+                            <div class="form-group">
+                                <label for="companyName"> {{'Title' | translate}}</label>
+                                <input type="text" id="companyName" class="form-control" name="title"
+                                       [(ngModel)]="editProd.title"
+                                       #title="ngModel" required>
+                                <span class="help-block" *ngIf="title?.touched && title?.errors?.required"
+                                      style="color:red">
+                  <small>{{'Please Enter this Field*' | translate}}</small>
+                </span>
+                            </div>
+                            <div class="form-group">
+                                <label for="projectinput8">{{'Description' | translate}}</label>
+                                <textarea id="projectinput8" rows="5" class="form-control" name="desc"
+                                          [(ngModel)]="editProd.description" #desc="ngModel" required></textarea>
+                                <span class="help-block" *ngIf="desc?.touched && desc?.errors?.required"
+                                      style="color:red">
+                  <small>{{'Please Enter this Field* ' | translate}}</small>
+                </span>
+                            </div>
+                            <div class="row form-label-group">
+                                <div class="col-3">
+                                    <label> {{'Select File:' | translate}}</label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="mb-4">
+                                        <img [src]="editProd.imageUrl" class="doctors-img img-fluid"
+                                             alt="example placeholder avatar">
+                                    </div>
+                                    <button class="btn btn-info button-upload" type="button">
+                                        <i class="fa fa-upload" aria-hidden="true"></i> Upload file
+                                      </button>
+                                    <input type="file" class="upload file-upload" accept="image/*" (change)="readUrl1($event)"
+                                           name="image">
+                                           <p>Best resolution 800px*532px</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="issueinput6"> {{'Select Category' | translate}}</label>
+                                <select id="issueinput6" class="form-control" data-toggle="tooltip" data-trigger="hover"
+                                        data-placement="top" data-title="Status" name="category"
+                                        [(ngModel)]="editProd.category"
+                                        #cat="ngModel" (change)="filterSubCat()" required>
+                                    <option disabled>Select Category</option>
+                                    <option *ngFor="let list of catData" [value]="list._id">{{list.title}}</option>
+                                </select>
+                                <span class="help-block" *ngIf="cat?.touched && cat?.errors?.required"
+                                      style="color:red">
+                  <small> {{'Please select this Field* ' | translate}}</small>
+                </span>
+                            </div>
+                            <div class="form-group" *ngIf="subCategories.length > 0">
+                                <label for="issueinpusdsdt6">{{'Sub-category' | translate}}</label>
+                                <select id="issueinpusdsdt6" class="form-control" data-toggle="tooltip"
+                                        data-trigger="hover"
+                                        data-placement="top" data-title="Status" name="subcat"
+                                        [(ngModel)]="editProd.subcategory"
+                                        #subcat="ngModel">
+                                    <option disabled>{{'Sub-category' | translate}}</option>
+                                    <option *ngFor="let list of subCategories" [value]="list._id"
+                                            name="cat">{{list.title}}
+                                    </option>
+                                </select>
+                                <span class="help-block" *ngIf="subcat?.touched && subcat?.errors?.required"
+                                      style="color:red">
+                                    <small>{{'Please select this Field*' | translate}}</small>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label> {{'Type : ' | translate}}</label>
+                            <select class="form-control" name="cat" [(ngModel)]="editProd.type" #cat="ngModel">
+                                <option disabled>select product</option>
+                                <option *ngFor="let count of categoryList">{{count.name}} </option>
+                            </select>
+                            <span class="help-block" *ngIf="cat?.touched && cat?.errors?.required" style="color:red">
+                <small> {{'Please select this Field* ' | translate}}</small>
+              </span>
+                        </div>
+                        <div class="row form-label-group" *ngFor="let list of editProd.variant; let i=index"
+                             [attr.data-index]="i">
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="companyName"> {{'Capacity :' | translate}}</label>
+                                    <input type="text" class="form-control" [ngModelOptions]="{standalone:true}"
+                                           name="unit{{i}}"
+                                           [(ngModel)]="list.unit" #unit="ngModel" required>
+                                    <span class="help-block" *ngIf="unit?.touched && unit?.errors?.required"
+                                          style="color:red">
+                    <small>{{'Enter Capacity*:' | translate}}</small>
+                  </span>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="companyName">{{'Price' | translate}}</label>
+                                    <input type="number" class="form-control" [ngModelOptions]="{standalone:true}"
+                                           name="price{{i}}" min="0"
+                                           [(ngModel)]="list.price" #price="ngModel" required>
+                                    <span class="help-block" *ngIf="price?.touched && price?.errors?.required"
+                                          style="color:red">
+                    <small>{{'Enter Price*' | translate}}</small>
+                  </span>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="companyName">{{'Stock :' | translate}}</label>
+                                    <input type="number" class="form-control" placeholder="Number"
+                                           [ngModelOptions]="{standalone:true}" min="0"
+                                           name="prodstock{{i}}" [(ngModel)]="list.productstock" #prodstock="ngModel"
+                                           required>
+                                    <span class="help-block" *ngIf="prodstock?.touched && prodstock?.errors?.required"
+                                          style="color:red">
+                    <small>{{'Enter Stock*' | translate}}</small>
+                  </span>
+                                </div>
+                            </div>
+                            <div class="col-1 added-block">
+                                <button class="btn btn-raised btn-info" (click)="addNewVariant()" *ngIf="i==0"
+                                        type="button">
+                                    <em class="fa fa-plus"></em>
+                                </button>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="danger">
+                                    <button class="btn btn-raised btn-danger" (click)="removeVariant(i)" *ngIf="i!==0"
+                                            type="button">
+                                        <em class="fa fa-trash"></em>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" form-actions">
+                            <button type="submit" class="btn btn-raised btn-raised add-modules mr-2"
+                                    [disabled]="f.invalid || isDisabled">
+                                <i class="fa fa-check-square-o"></i>{{' Update!' | translate}}
+
+                            </button>
+                            <button type="button" (click)="cancelProductUpdate()"
+                                    class="btn btn-raised btn-raised btn-warning mr-1">
+                                <i class="ft-x"></i> {{' Cancel' | translate}}
+
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

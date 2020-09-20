@@ -1,0 +1,200 @@
+<div class="row text-left">
+    <div class="col-sm-12">
+        <div class="content-header text-center text-primary">{{'Add New Product' | translate}}</div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card ">
+            <div class="card-header pb-2">
+
+
+            </div>
+            <div class="card-content">
+                <div class="px-3">
+                    <form class="form" #f="ngForm" (ngSubmit)="addNewProduct()">
+                        <div class="form-body">
+                            <!-- <div>
+                                <h4>{{'Add Product' | translate}}</h4>
+                            </div> -->
+
+                            <div class="form-group">
+                                <label for="companyName">{{'Title' | translate}}</label>
+                                <input type="text" id="companyName" class="form-control" name="Enter Product Name"
+                                       [(ngModel)]="addProd.title" #title="ngModel" required>
+                                <span class="help-block" *ngIf="title?.touched && title?.errors?.required"
+                                      style="color:red">
+                                    <small> {{'This field is required*' | translate}}</small>
+                                </span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="projectinput8"> {{'Description' | translate}}</label>
+                                <textarea id="projectinput8" rows="5" class="form-control" name="desc"
+                                          [(ngModel)]="addProd.description" #desc="ngModel" required></textarea>
+                                <span class="help-block" *ngIf="desc?.touched && desc?.errors?.required"
+                                      style="color:red">
+                                    <small> {{'This field is required*' | translate}}</small>
+                                </span>
+                            </div>
+
+                            <div class="row form-label-group">
+                                <div class="col-3">
+                                    <label for="inputEmail">{{'Select File:' | translate}}</label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="mb-4">
+                                        <img src="{{url}}" class="doctors-img img-fluid">
+                                    </div>
+                                    <button class="btn btn-info button-upload" type="button">
+                                        <i class="fa fa-upload" aria-hidden="true"></i> Upload file
+                                    </button>
+                                    <input type="file" class="upload file-upload" accept="image/*"
+                                           (change)="readUrl1($event)"
+                                           name="image">
+                                    <p>Best resolution 800px*532px</p>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="issueinput6">{{'Select Category' | translate}}</label>
+                                <select id="issueinput6" class="form-control" data-toggle="tooltip" data-trigger="hover"
+                                        data-placement="top" data-title="Status" name="cat"
+                                        [(ngModel)]="addProd.category" (change)="filterSubCat()"
+                                        #cat="ngModel" required>
+                                    <option disabled>{{'Select Category' | translate}}</option>
+                                    <option *ngFor="let list of catData" [value]="list._id" name="cat">{{list.title}}
+                                    </option>
+                                </select>
+                                <span class="help-block" *ngIf="cat?.touched && cat?.errors?.required"
+                                      style="color:red">
+                                    <small>{{'Please select this Field*' | translate}}</small>
+                                </span>
+                            </div>
+                            <div class="form-group" *ngIf="subCategories.length > 0">
+                                <label for="issueinpusdsdt6">{{'Sub-category' | translate}}</label>
+                                <select id="issueinpusdsdt6" class="form-control" data-toggle="tooltip"
+                                        data-trigger="hover"
+                                        data-placement="top" data-title="Status" name="subcat"
+                                        [(ngModel)]="addProd.subcategory"
+                                        #subcat="ngModel">
+                                    <option disabled>{{'Sub-category' | translate}}</option>
+                                    <option *ngFor="let list of subCategories" [value]="list._id"
+                                            name="cat">{{list.title}}
+                                    </option>
+                                </select>
+                                <span class="help-block" *ngIf="subcat?.touched && subcat?.errors?.required"
+                                      style="color:red">
+                                    <small>{{'Please select this Field*' | translate}}</small>
+                                </span>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+
+                        <div class="form-group">
+                            <label>{{'Type :' | translate}}</label>
+                            <select class="form-control" name="cat" [(ngModel)]="addProd.type" #cat="ngModel" required>
+                                <option disabled>Select Type</option>
+                                <option *ngFor="let count of categoryList">{{count.name}} </option>
+                            </select>
+                            <span class="help-block" *ngIf="cat?.touched && cat?.errors?.required" style="color:red">
+                                <small>{{'Please select this Field*' | translate}}</small>
+                            </span>
+
+
+                        </div>
+
+
+                        <div class="row form-label-group" *ngFor="let data of addProd.variant; let i=index"
+                             [attr.data-index]="i">
+
+
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="companyName">{{'Capacity :' | translate}}</label>
+                                    <input type="text" id="sdasdasd" class="form-control" placeholder="Litre/Kg/Pieces"
+                                           [ngModelOptions]="{standalone:true}" name="uni{{i}}" [(ngModel)]="data.unit"
+                                           #uni="ngModel" required>
+                                    <span class="help-block" *ngIf="uni?.touched && uni?.errors?.required"
+                                          style="color:red">
+                                        <small>{{'Enter Capacity*' | translate}}</small>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="companyName">{{'Price' | translate}}</label>
+                                    <input type="number" id="sadprice" class="form-control" placeholder="₹(Rs.)"
+                                           [ngModelOptions]="{standalone:true}" name="pric{{i}}" min="0"
+                                           [(ngModel)]="data.price"
+                                           #pric="ngModel" required>
+                                    <span class="help-block" *ngIf="pric?.touched && pric?.errors?.required"
+                                          style="color:red">
+                                        <small>{{'Enter Price*' | translate}}</small>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!--                            <div class="col-3">-->
+                            <!--                                <label>Stock applicable</label>-->
+                            <!--                                <select class="form-control" name="stockApplicanle-{{i}}" [(ngModel)]="data.enable"-->
+                            <!--                                        (change)="resetProductStock(i)">-->
+                            <!--                                    <option disabled>Is stock applicable</option>-->
+                            <!--                                    <option [ngValue]="true">Yes</option>-->
+                            <!--                                    <option [ngValue]="false">No</option>-->
+                            <!--                                </select>-->
+                            <!--                            </div>-->
+
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="companyName">{{'Stock :' | translate}}</label>
+                                    <input type="number" id="prfgfgdfice" class="form-control" placeholder="Number"
+                                           [ngModelOptions]="{standalone:true}" min="0" name="prodstock{{i}}"
+                                           [(ngModel)]="data.productstock" #prodstock="ngModel" required>
+                                    <span class="help-block" *ngIf="prodstock?.touched && prodstock?.errors?.required"
+                                          style="color:red">
+                                        <small>{{'Enter stock*' | translate}}</small>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="col-1">
+                                <div class="col-md-2 added-block" *ngIf="i==0">
+                                    <!-- <label for="companyName">Add</label> -->
+                                    <button class="btn btn-raised btn-info plus" (click)="addNewVariant()"
+                                            type="button">
+                                        <em class="fa fa-plus"></em>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-1" *ngIf="i!==0">
+                                <div class="col-md-2 added-block">
+                                    <!-- <label for="companyName">Delete</label> -->
+                                    <button class="btn btn-raised btn-danger danger-button" (click)="removeVariant(i)"
+                                            type="button">
+                                        <em class="fa fa-trash"></em>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-raised btn-raised add-modules mr-2"
+                                    [disabled]="f.invalid || isDisabled">
+                                <i class="fa fa-check-square-o"></i>{{'Add Product' | translate}}
+                            </button>
+                            <button type="button" class="btn btn-raised btn-raised btn-warning mr-1"
+                                    (click)="cancelProductCreate()">
+                                <i class="ft-x"></i> {{'Cancel' | translate}}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

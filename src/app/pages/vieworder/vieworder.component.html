@@ -1,0 +1,336 @@
+
+<div class="container" *ngIf="orderData">
+    <div class="row">
+        <div class="col-sm-6">
+            <h5>{{'Orders' | translate}}</h5>
+            <small>
+                <a [routerLink]=" ['/dashboard'] ">{{'Dashboard' | translate}}</a> ->
+                <a [routerLink]="['/orders']"> {{'Orders' | translate}}</a>->{{'Order Detail' | translate}}
+            </small>
+        </div>
+        <div class="col-sm-6 pull-right" *ngIf="orderData.orderStatus === 'DELIVERED'">
+            <button class="btn btn-warning" (click)="openInvoice()">
+                <em class="fa fa-print"></em>&nbsp;&nbsp;{{'Invoice' | translate}}
+            </button>
+        </div>
+    </div>
+</div>
+<div class="container" *ngIf="orderData">
+    <div>
+        <div class="panel panel-default">
+            <div class="panel-heading">{{'Order Information' | translate}}</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="lead bb">{{'Details' | translate}}</p>
+                        <hr>
+                        <form class="form-horizontal p-20">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Order Id:' | translate}}</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.orderID}}</strong>
+                                        <!-- <strong>{{orderData.createdAt |  date:'hh:mm'}}</strong> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Purchased On:' | translate}}</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.createdAt |  date:'dd-MMM-yy'}}</strong>
+                                        <!-- <strong>{{orderData.createdAt |  date:'hh:mm'}}</strong> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Client Name:' | translate}}</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.user.firstName}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Items:' | translate}}</div>
+                                    <div class="col-sm-8">
+                                        <strong>1</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Amount:' | translate}}</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.grandTotal | currency:currencyCode:'symbol':'1.2-2'}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Status' | translate}}:</div>
+                                    <div class="col-sm-8">
+                                        <!-- <span _ngcontent-c12="" class="label label-warning ng-star-inserted">pending</span> -->
+                                        <span
+                                                class="label label-warning ng-star-inserted">{{orderData.orderStatus}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'delivery-date' | translate}}:</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.deliveryDate}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'time-slot' | translate}}:</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.deliveryTime}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" *ngIf="orderData.deliveryType === 'Home_Delivery'">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Assigned To:' | translate}}</div>
+                                    <div class="col-sm-8">
+                                        <!-- <span _ngcontent-c12="" class="label label-warning ng-star-inserted">pending</span> -->
+                                        <span class="label label-warning ng-star-inserted"
+                                              *ngIf="orderData.orderAssigned">{{orderData.assignedTo.firstName}}&nbsp;{{orderData.assignedTo.lastName}}</span>
+                                        <span class="text-info" *ngIf="!orderData.orderAssigned">Not yet assigned</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="lead bb">{{'Client' | translate}}</p>
+                        <hr>
+                        <form class="form-horizontal p-20">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Name' | translate}}:</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.user.firstName}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Email' | translate}}:</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.user.email}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Phone' | translate}}:</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.user.mobileNumber}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="lead bb">{{'Billing Address' | translate}}</p>
+                        <hr>
+                        <form class="form-horizontal p-20">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Full Name' | translate}}:</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.user.firstName}}
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" *ngIf="orderData.deliveryAddress">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Address' | translate}}:</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.deliveryAddress.address}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'ZIP/Post Code' | translate}}:</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.deliveryAddress.postalCode}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Phone' | translate}}:</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.user.mobileNumber}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="lead bb">{{'Shipping Address' | translate}}</p>
+                        <hr>
+                        <form class="form-horizontal p-20">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Full Name' | translate}}:</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.user.firstName}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" *ngIf="orderData.deliveryAddress">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Address' | translate}}:</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.deliveryAddress.address}}
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'ZIP/Post Code' | translate}}:</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.deliveryAddress.postalCode}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">{{'Phone' | translate}}:</div>
+                                    <div class="col-sm-8">
+                                        <strong>{{orderData.user.mobileNumber}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+
+                <h6>{{'Payment Details' | translate}}</h6>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h6>{{'sub-total' | translate}}:</h6>
+                                <h6>{{'Tax' | translate}}:</h6>
+                                <h6>{{'Delivery Charges' | translate}}:</h6>
+                                <h6>{{'Payment Type' | translate}}:</h6>
+                                <h6>{{'payment-status' | translate}}:</h6>
+                            </div>
+                            <div class="col-md-7">
+                                <h6 class="details">{{orderData.subTotal | currency:currencyCode:'symbol':'1.2-2'}}</h6>
+                                <h6 class="details">{{orderData.tax | currency:currencyCode:'symbol':'1.2-2'}}</h6>
+                                <h6 class="details">{{orderData.deliveryCharges | currency:currencyCode:'symbol':'1.2-2'}}</h6>
+                                <h6 class="details">{{orderData.paymentType}}</h6>
+                                <h6 class="details">{{orderData.paymentType === 'CARD' ? "Success" : "Pending"}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h6 *ngIf="orderData.cart.coupon">{{'Total' | translate}}:</h6>
+                                <h6>{{'Discount/Coupon' | translate}}:</h6>
+                                <h6>{{'Pay Amount' | translate}}:</h6>
+                            </div>
+                            <div class="col-md-7 payment">
+                                <h6 class="details"
+                                    *ngIf="orderData.cart.coupon">{{(orderData.cart.subTotal + orderData.tax + orderData.deliveryCharges) | currency:currencyCode:'symbol':'1.2-2'}}</h6>
+                                <h6 class="details">{{orderData.cart.coupon ? (orderData.cart.couponInfo.couponDiscountAmount | currency:currencyCode:'symbol':'1.2-2') : (0 | currency:currencyCode:'symbol':'1.2-2')}}</h6>
+                                <h6 class="details">{{orderData.grandTotal | currency:currencyCode:'symbol':'1.2-2'}}</h6>
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading">{{'Products in orderName' | translate}}</div>
+            <hr>
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">{{'Product Name' | translate}}</th>
+                        <th class="text-center">{{'Price' | translate}}</th>
+                        <th class="text-center">{{'Deal Offer' | translate}}</th>
+                        <th class="text-center">{{'Size / Quantity' | translate}}</th>
+                        <th class="text-center">{{'Total' | translate}}</th>
+                        <!--                        <th class="text-center">{{'Grand Total' | translate}}</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let data of orderData.cart.cart; let i=index ">
+                        <td class="text-center">{{i + 1}}</td>
+                        <td class="text-center"> {{data.title}}</td>
+                        <td class="text-center">{{data.price | currency:currencyCode:'symbol':'1.2-2'}}</td>
+                        <td class="text-center">{{data.dealAmountOneProd ? (data.dealAmountOneProd | currency:currencyCode:'symbol':'1.2-2') : (0 | currency:currencyCode:'symbol':'1.2-2')}}</td>
+                        
+                        <td class="text-center">{{data.quantity}}&nbsp;({{data.unit}})</td>
+                        <td class="text-center">{{data.productTotal | currency:currencyCode:'symbol':'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td class="text-right">
+                            <strong>Total :</strong>
+                        </td>
+                        <td class="text-center"> {{orderData.subTotal | currency:currencyCode:'symbol':'1.2-2'}}</td>
+                    </tr>
+                   
+                    <tr>
+                        <td colspan="4"></td>
+                        <td class="text-right">
+                            <strong>{{'Tax' | translate}}:</strong>
+                        </td>
+                        <td class="text-center">{{orderData.tax | currency:currencyCode:'symbol':'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td class="text-right">
+                            <strong>{{'Delivery Charges' | translate}}:</strong>
+                        </td>
+                        <td class="text-center">{{orderData.deliveryCharges | currency:currencyCode:'symbol':'1.2-2'}}</td>
+                    </tr>
+                    <tr *ngIf="orderData.cart.coupon">
+                        <td colspan="4"></td>
+                        <td class="text-right">
+                            <strong>{{'Discount/Coupon' | translate}}:</strong>
+                        </td>
+                        <td class="text-center">{{orderData.cart.couponInfo.couponDiscountAmount | currency:currencyCode:'symbol':'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td class="text-right">
+                            <strong> {{'Grand Total' | translate}}:</strong>
+                        </td>
+                        <td class="text-center">
+                            <strong>{{orderData.grandTotal | currency:currencyCode:'symbol':'1.2-2'}}</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer">
+                <div class="row ">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

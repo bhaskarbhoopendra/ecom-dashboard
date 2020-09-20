@@ -1,0 +1,35 @@
+stages:
+  - deploy
+
+deploy_to_aws_prod:
+    type: deploy
+    image: node:10
+    script:
+      - apt-get update
+      - apt-get -y install python-dev
+      - apt-get -y install python-pip
+      - pip install awscli
+      - npm i -g @angular/cli
+      - npm install --progress=false
+      - ng build --prod --c=production
+      - aws s3 --region "ap-south-1" sync dist/ s3://grocery-newdashboard --expires "2034-01-01T00:00:00Z" --cache-control "max-age=2592000,public" --delete
+      - aws cloudfront create-invalidation --distribution-id E1FW77U5N2CNH2 --paths "/*"
+    only:
+      - master
+
+  
+deploy_to_aws_testing:
+    type: deploy
+    image: node:10
+    script:
+      - apt-get update
+      - apt-get -y install python-dev
+      - apt-get -y install python-pip
+      - pip install awscli
+      - npm i -g @angular/cli
+      - npm install --progress=false
+      - ng build --prod --c=testing
+      - aws s3 --region "ap-south-1" sync dist/ s3://grocery-newdashboard-testing --expires "2034-01-01T00:00:00Z" --cache-control "max-age=2592000,public" --delete
+      - aws cloudfront create-invalidation --distribution-id E3IEBH93GO9AK7 --paths "/*"
+    only:
+      - testing

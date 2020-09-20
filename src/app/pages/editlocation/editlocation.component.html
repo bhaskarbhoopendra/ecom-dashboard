@@ -1,0 +1,85 @@
+<div class="row text-left">
+  <div class="col-sm-12">
+    <div class="content-header text-center text-primary">Edit Location</div>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card ">
+      <div class="card-header pb-2">
+
+
+      </div>
+      <div class="card-content">
+        <div class="px-3">
+          <form class="form" #f="ngForm" (ngSubmit)="onSubmitEdit(f)">
+            <div class="form-body">
+              <!-- <div>
+                <h4>Edit Location</h4>
+              </div> -->
+
+              <div class="form-group">
+                <label for="companyName">Location Name</label>
+                <input type="text" id="companyName" placeholder="Enter Location Name" class="form-control" name="loc"
+                  [(ngModel)]="editLoc.locationName" #loc="ngModel">
+              </div>
+              <div class="form-group">
+                <label for="companyName">Building No</label>
+                <input type="text" id="companyName" placeholder="Enter Building No " class="form-control" name="buildno"
+                  [(ngModel)]="editLoc.buildingNo" #buildno="ngModel">
+              </div>
+              <div class="form-group">
+                <label for="companyName">Building Name</label>
+                <input type="text" id="companyName" placeholder="Enter Building Name " class="form-control"
+                  name="buildname" [(ngModel)]="editLoc.buildingName" #buildname="ngModel">
+              </div>
+              <div class="form-group">
+                <label for="companyName">Street</label>
+                <input type="text" id="companyName" placeholder="Enter Street " class="form-control" name="company"
+                  [(ngModel)]="editLoc.street" #buildno="ngModel">
+              </div>
+              <div class="form-group">
+                <label for="companyName">Locality</label>
+                <input type="text" id="companyName" placeholder="Enter Locality " class="form-control" name="loc"
+                  [(ngModel)]="editLoc.locality" #loc="ngModel">
+              </div>
+              <div class="form-group">
+                <label for="companyName">City</label>
+                <input type="text" id="companyName" placeholder="Enter City " class="form-control" name="citi"
+                  [(ngModel)]="editLoc.city" #citi="ngModel">
+              </div>
+              <div class="form-group">
+                <label for="companyName">State</label>
+                <input type="text" id="companyName" placeholder="Enter State" class="form-control" name="stat"
+                  [(ngModel)]="editLoc.state" #stat="ngModel">
+              </div>
+              <div class="form-group">
+                <label for="companyName">Country</label>
+                <input type="text" id="companyName" placeholder="Enter Country " class="form-control" name="count"
+                  [(ngModel)]="editLoc.country" #count="ngModel">
+              </div>
+              <div class="form-group">
+                <label for="companyName">Postal Code</label>
+                <input type="text" id="companyName" placeholder="Enter Postal Code " class="form-control" name="post"
+                  [(ngModel)]="editLoc.postalCode" #post="ngModel">
+              </div>
+            </div>
+
+            <div class="form-actions">
+
+
+
+              <button type="submit" class="btn btn-raised btn-raised add-modules mr-2">
+                <i class="fa fa-check-square-o"></i> Update!
+              </button>
+              <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="onCancel()">
+                <i class="ft-x"></i> Cancel
+              </button>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

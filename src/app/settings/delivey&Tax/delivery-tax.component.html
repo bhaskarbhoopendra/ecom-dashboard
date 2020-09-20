@@ -1,0 +1,78 @@
+<div class="row text-left">
+    <div class="col-sm-12">
+        <div class="content-header text-center text-primary">{{'Delivery and Tax information' | translate}}</div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card ">
+            <div class="card-header pb-2">
+            </div>
+            <div class="card-content">
+                <div class="px-3">
+                    <div class="form">
+                        <form (ngSubmit)="saveDeliveryAndTaxInformation()" #f="ngForm">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label>{{'Delivery Type' | translate}}</label>
+                                    <select class="form-control" name="deliveryType"
+                                            [(ngModel)]="deliveryTaxData.deliveryType" required>
+                                        <option disabled>{{'Delivery price Fix/Flexible' | translate}}</option>
+                                        <option value="fixed">{{'Fixed' | translate}}</option>
+                                        <option value="flexible"> {{'Flexible' | translate}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tax Type</label>
+                                    <select class="form-control" name="taxType" [(ngModel)]="deliveryTaxData.taxType"
+                                            required>
+                                        <option disabled> {{'Tax (exluded or included )' | translate}}</option>
+                                        <option value="included"> {{'Included' | translate}}</option>
+                                        <option value="excluded"> {{'Excluded' | translate}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>{{'Tax amount' | translate}}</label>
+                                    <input class="form-control" type="number" name="taxAmount"
+                                           [(ngModel)]="deliveryTaxData.taxAmount" required>
+                                </div>
+                                <div class="form-group" *ngIf="deliveryTaxData.deliveryType === 'fixed'">
+                                    <label> {{'Delivery Charges' | translate}}</label>
+                                    <input class="form-control" type="number" name="fixedDeliveryCharge"
+                                           [(ngModel)]="deliveryTaxData.fixedDeliveryCharges" required>
+                                </div>
+                                <div class="form-group" *ngIf="deliveryTaxData.deliveryType === 'flexible'">
+                                    <label> {{'Delivery Charges Per Kilometre' | translate}}</label>
+                                    <input class="form-control" type="number" name="deliveryChargePerKilometre"
+                                           [(ngModel)]="deliveryTaxData.deliveryChargePerKm" required>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-4">
+                                        <label> {{'Latitude' | translate}}</label>
+                                        <input class="form-control" type="number" name="lat"
+                                               [(ngModel)]="deliveryTaxData.location.lat" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label> {{'Longitude' | translate}}</label>
+                                        <input class="form-control" type="number" name="lng"
+                                               [(ngModel)]="deliveryTaxData.location.lng" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class=" form-actions">
+                                <button type="submit" class="btn btn-raised btn-raised add-modules mr-2"
+                                        [disabled]="f.invalid">
+                                    <i class="fa fa-check-square-o"></i> {{'Submit' | translate}}
+                                </button>
+                                <button type="button" class="btn btn-raised btn-raised btn-warning mr-1"
+                                        routerLink="/dashboard">
+                                    <i class="ft-x"></i> {{'Cancel' | translate}}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>

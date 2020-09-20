@@ -1,0 +1,358 @@
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["common"],{
+
+/***/ "./src/app/products/countries.ts":
+/*!***************************************!*\
+  !*** ./src/app/products/countries.ts ***!
+  \***************************************/
+/*! exports provided: COUNTRIES */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COUNTRIES", function() { return COUNTRIES; });
+const COUNTRIES = [
+    {
+        name: 'Salads',
+        id: 'Salads',
+        flag: 'c/c3/Flag_of_France.svg',
+        area: 17075200,
+        population: 146989754
+    },
+    {
+        id: 'Slice',
+        name: 'France',
+        flag: 'c/c3/Flag_of_France.svg',
+        area: 640679,
+        population: 64979548
+    },
+    {
+        id: 'Desserts',
+        name: 'Germany',
+        flag: 'b/ba/Flag_of_Germany.svg',
+        area: 357114,
+        population: 82114224
+    },
+    {
+        id: 'Main Course',
+        name: 'Portugal',
+        flag: '5/5c/Flag_of_Portugal.svg',
+        area: 92090,
+        population: 10329506
+    },
+    {
+        id: 'Starters',
+        name: 'Canada',
+        flag: 'c/cf/Flag_of_Canada.svg',
+        area: 9976140,
+        population: 36624199
+    },
+    {
+        id: 'Slice',
+        name: 'Vietnam',
+        flag: '2/21/Flag_of_Vietnam.svg',
+        area: 331212,
+        population: 95540800
+    },
+    {
+        id: 'Salads',
+        name: 'Brazil',
+        flag: '0/05/Flag_of_Brazil.svg',
+        area: 8515767,
+        population: 209288278
+    },
+    {
+        id: 'Salads',
+        name: 'Mexico',
+        flag: 'f/fc/Flag_of_Mexico.svg',
+        area: 1964375,
+        population: 129163276
+    },
+    {
+        id: 'Salads',
+        name: 'United States',
+        flag: 'a/a4/Flag_of_the_United_States.svg',
+        area: 9629091,
+        population: 324459463
+    },
+    {
+        id: 'Salads',
+        name: 'India',
+        flag: '4/41/Flag_of_India.svg',
+        area: 3287263,
+        population: 1324171354
+    },
+    {
+        id: 'Salads',
+        name: 'Indonesia',
+        flag: '9/9f/Flag_of_Indonesia.svg',
+        area: 1910931,
+        population: 263991379
+    },
+    {
+        id: 'Salads',
+        name: 'Tuvalu',
+        flag: '3/38/Flag_of_Tuvalu.svg',
+        area: 26,
+        population: 11097
+    },
+    {
+        name: 'China',
+        id: 'Salads',
+        flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
+        area: 9596960,
+        population: 1409517397
+    }
+];
+
+
+/***/ }),
+
+/***/ "./src/app/products/country.service.ts":
+/*!*********************************************!*\
+  !*** ./src/app/products/country.service.ts ***!
+  \*********************************************/
+/*! exports provided: CountryService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CountryService", function() { return CountryService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _countries__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./countries */ "./src/app/products/countries.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+
+
+
+
+
+
+function compare(v1, v2) {
+    return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+}
+function sort(countries, column, direction) {
+    if (direction === '') {
+        return countries;
+    }
+    else {
+        return [...countries].sort((a, b) => {
+            const res = compare(a[column], b[column]);
+            return direction === 'asc' ? res : -res;
+        });
+    }
+}
+function matches(country, term, pipe) {
+    return country.name.toLowerCase().includes(term)
+        || pipe.transform(country.area).includes(term)
+        || pipe.transform(country.population).includes(term);
+}
+let CountryService = class CountryService {
+    constructor(pipe) {
+        this.pipe = pipe;
+        this._loading$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](true);
+        this._search$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+        this._countries$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]([]);
+        this._total$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](0);
+        this._state = {
+            page: 1,
+            pageSize: 4,
+            searchTerm: '',
+            sortColumn: '',
+            sortDirection: ''
+        };
+        this._search$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["tap"])(() => this._loading$.next(true)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["debounceTime"])(200), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["switchMap"])(() => this._search()), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["delay"])(200), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["tap"])(() => this._loading$.next(false))).subscribe(result => {
+            this._countries$.next(result.countries);
+            this._total$.next(result.total);
+        });
+        this._search$.next();
+    }
+    get countries$() { return this._countries$.asObservable(); }
+    get total$() { return this._total$.asObservable(); }
+    get loading$() { return this._loading$.asObservable(); }
+    get page() { return this._state.page; }
+    get pageSize() { return this._state.pageSize; }
+    get searchTerm() { return this._state.searchTerm; }
+    set page(page) { this._set({ page }); }
+    set pageSize(pageSize) { this._set({ pageSize }); }
+    set searchTerm(searchTerm) { this._set({ searchTerm }); }
+    set sortColumn(sortColumn) { this._set({ sortColumn }); }
+    set sortDirection(sortDirection) { this._set({ sortDirection }); }
+    _set(patch) {
+        Object.assign(this._state, patch);
+        this._search$.next();
+    }
+    _search() {
+        const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
+        // 1. sort
+        let countries = sort(_countries__WEBPACK_IMPORTED_MODULE_3__["COUNTRIES"], sortColumn, sortDirection);
+        // 2. filter
+        countries = countries.filter(country => matches(country, searchTerm, this.pipe));
+        const total = countries.length;
+        // 3. paginate
+        countries = countries.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])({ countries, total });
+    }
+};
+CountryService.ctorParameters = () => [
+    { type: _angular_common__WEBPACK_IMPORTED_MODULE_4__["DecimalPipe"] }
+];
+CountryService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' }),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common__WEBPACK_IMPORTED_MODULE_4__["DecimalPipe"]])
+], CountryService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/products/sortable.directive.ts":
+/*!************************************************!*\
+  !*** ./src/app/products/sortable.directive.ts ***!
+  \************************************************/
+/*! exports provided: NgbdSortableHeader */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgbdSortableHeader", function() { return NgbdSortableHeader; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+const rotate = { 'asc': 'desc', 'desc': '', '': 'asc' };
+let NgbdSortableHeader = class NgbdSortableHeader {
+    constructor() {
+        this.direction = '';
+        this.sort = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+    }
+    rotate() {
+        this.direction = rotate[this.direction];
+        this.sort.emit({ column: this.sortable, direction: this.direction });
+    }
+};
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", String)
+], NgbdSortableHeader.prototype, "sortable", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", String)
+], NgbdSortableHeader.prototype, "direction", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+], NgbdSortableHeader.prototype, "sort", void 0);
+NgbdSortableHeader = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"])({
+        selector: 'th[sortable]',
+        host: {
+            '[class.asc]': 'direction === "asc"',
+            '[class.desc]': 'direction === "desc"',
+            '(click)': 'rotate()'
+        }
+    })
+], NgbdSortableHeader);
+
+
+
+/***/ }),
+
+/***/ "./src/app/shared/data/chartist.json":
+/*!*******************************************!*\
+  !*** ./src/app/shared/data/chartist.json ***!
+  \*******************************************/
+/*! exports provided: Bar, default */
+/***/ (function(module) {
+
+module.exports = {"Bar":{"labels":["Jan","Feb","Mar","Apr"],"series":[[5,4,3,7],[3,2,9,5]]}};
+
+/***/ }),
+
+/***/ "./src/app/shared/directives/match-height.directive.ts":
+/*!*************************************************************!*\
+  !*** ./src/app/shared/directives/match-height.directive.ts ***!
+  \*************************************************************/
+/*! exports provided: MatchHeightDirective, MatchHeightModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatchHeightDirective", function() { return MatchHeightDirective; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatchHeightModule", function() { return MatchHeightModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+let MatchHeightDirective = class MatchHeightDirective {
+    constructor(el) {
+        this.el = el;
+    }
+    ngAfterViewInit() {
+        // call our matchHeight function here
+        setTimeout(() => { this.matchHeights(this.el.nativeElement, this.matchHeight); }, 300);
+    }
+    matchHeights(parent, className) {
+        // match height logic here
+        if (!parent)
+            return;
+        // step 1: find all the child elements with the selected class name
+        const children = parent.getElementsByClassName(className);
+        if (!children)
+            return;
+        //Pixinvent - Match hight - fix --- comment below code
+        Array.from(children).forEach((x) => {
+            x.style.height = 'initial';
+        });
+        // step 2a: get all the child elements heights
+        const itemHeights = Array.from(children)
+            .map(x => x.getBoundingClientRect().height);
+        // step 2b: find out the tallest
+        const maxHeight = itemHeights.reduce((prev, curr) => {
+            return curr > prev ? curr : prev;
+        }, 0);
+        // step 3: update all the child elements to the tallest height
+        Array.from(children)
+            .forEach((x) => x.style.height = `${maxHeight}px`);
+    }
+    onResize() {
+        // call our matchHeight function here
+        this.matchHeights(this.el.nativeElement, this.matchHeight);
+    }
+};
+MatchHeightDirective.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"] }
+];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", String)
+], MatchHeightDirective.prototype, "matchHeight", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"])('window:resize'),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Function),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", []),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:returntype", void 0)
+], MatchHeightDirective.prototype, "onResize", null);
+MatchHeightDirective = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"])({
+        selector: '[matchHeight]'
+    }),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"]])
+], MatchHeightDirective);
+
+let MatchHeightModule = class MatchHeightModule {
+};
+MatchHeightModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+        declarations: [MatchHeightDirective],
+        exports: [MatchHeightDirective]
+    })
+], MatchHeightModule);
+
+
+
+/***/ })
+
+}]);
+//# sourceMappingURL=common.js.map

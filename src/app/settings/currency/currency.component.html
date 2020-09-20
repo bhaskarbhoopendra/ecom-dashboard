@@ -1,0 +1,64 @@
+<div class="row text-left">
+  <div class="col-sm-12">
+    <div class="content-header text-center text-primary">{{'Currency and Languages information' | translate}}</div>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card ">
+      <div class="card-header pb-2">
+      </div>
+      <div class="card-content">
+        <div class="px-3">
+          <div class="form">
+            <form #f="ngForm" (ngSubmit)="onSubmitInfo()">
+              <div class="form-body">
+
+                <div class="form-group">
+                  <label>{{'Languages' | translate}}</label>
+                  <select class="form-control" [(ngModel)]="dataInfo.languageCode" name="lang" #lang="ngModel" required>
+                    <option disabled>Select Language{{'Cancel' | translate}}:</option>
+                    <option *ngFor="let list of languageListData; let i=index" [value]="list.languageCode" name="cat">
+                      {{list.languageCode}} </option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>{{'Currency Name' | translate}}</label>
+                  <input type="text" id="companyName" class="form-control" [(ngModel)]="dataInfo.currencyName"
+                    name="currencyName" required>
+
+
+                </div>
+
+
+
+                <div class="form-group">
+                  <label>{{'Currency Code' | translate}}</label>
+                  <input type="text" id="companyName" class="form-control" [(ngModel)]="dataInfo.currencyCode"
+                    name="currencyCode" required>
+
+
+                </div>
+
+
+
+
+
+
+              </div>
+
+              <div class=" form-actions">
+                <button type="submit" class="btn btn-raised btn-raised add-modules mr-2" [disabled]="f.invalid">
+                  <i class="fa fa-check-square-o"></i> {{'Submit' | translate}}
+                </button>
+                <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" routerLink="/dashboard">
+                  <i class="ft-x"></i>{{'Cancel' | translate}}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>

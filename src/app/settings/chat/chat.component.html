@@ -1,0 +1,85 @@
+<div class="chat-page">
+    <div class="chat-container row">
+        <div class="user-list col-md-4">
+            <div class="search-input">
+                <input id="search" type="text" placeholder="search">
+                <i class="fa fa-search"></i>
+            </div>
+            <div class="users">
+                <div class="user-list-item">
+                    <div id="users-list" class="list-group position-relative">
+                        <div class="users-list-padding" *ngFor="let user of chatList">
+                            <a class="list-group-item bg-blue-grey bg-lighten-5 border-right-primary border-right-2"
+                                (click)="selectChat(user)">
+                                <span class="media">
+                                    <span class="avatar avatar-md avatar-online">
+                                        <img class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                                            src="assets/default-pic.png" alt="Generic placeholder image">
+                                        <i></i>
+                                    </span>
+                                    <div class="media-body text-center">
+                                        <h6 class="list-group-item-heading">
+                                            {{user.user.firstName}}&nbsp;{{user.user.lastName}}
+                                            <span
+                                                class="font-small-3 float-right primary">{{user.lastMessageTime | amTimeAgo}}</span>
+                                        </h6>
+                                        <p class="list-group-item-text text-muted text-left">
+                                            <i class="ft-check primary font-small-2"></i> {{user.lastMessage}}
+                                            <span class="float-right primary">
+                                                <i class="font-medium-1 icon-pin blue-grey lighten-3"></i>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8" *ngIf="selectedChat">
+            <div class="row">
+                <div class="col-md-12 person">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div _ngcontent-vve-c7="" class="media"><span _ngcontent-vve-c7=""
+                                    class="chat-app-sidebar-toggle ft-align-justify font-large-1 mr-2 d-none d-block d-sm-block d-md-none"></span>
+                                <div _ngcontent-vve-c7="" class="media-body text-left"><img _ngcontent-vve-c7=""
+                                        alt="avatar" class="rounded-circle mr-1" width="37"
+                                        src="assets/default-pic.png"><span class="title"
+                                        _ngcontent-vve-c7="">{{selectedChat.user.firstName}}&nbsp;{{selectedChat.user.lastName}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chatbox">
+
+                    <div class="messages">
+                        <div class="col all-chat" *ngFor="let message of selectedChat.messages"
+                            [class.right]="message.sentBy === 'Store'" [class.left]="message.sentBy === 'User'">
+                            <span>{{message.message}}</span>
+                        </div>
+                    </div>
+
+
+                    <div class="input-group mb-3 input-container" *ngIf="selectedChat">
+                        <div class="input-group-prepend">
+                        </div>
+                        <input type="text" class="form-control inputtext" placeholder="Type Your Message"
+                            aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="messageData.message">
+                        <button class="btn replyBtn" (click)="sendMessage()">
+                            {{' Send' | translate}}
+
+                        </button>
+                    </div>
+                </div>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+</div>

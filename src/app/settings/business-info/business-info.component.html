@@ -1,0 +1,294 @@
+<div class="content-heading">
+    Business User
+    <small> <a [routerLink]="['/home']">Home</a> -> Business User </small>
+</div>
+
+<!-- <div class="waiting-loader" *ngIf="loading == true">
+  <i class="fa fa-5x fa-spin fa-spinner" aria-hidden="true"></i>
+</div> -->
+
+<!-- START panel-->
+<div class="panel panel-default container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 mt-4 business-bg">
+            <div class="panel-heading">{{ "Business Details" | translate }}:</div>
+            <div class="panel-body">
+                <form role="form" (ngSubmit)="onSubmitBusiness(f)" #f="ngForm">
+                    <fieldset>
+                        <label class="col-sm-12 control-label custom">{{
+                            "Email" | translate
+                            }}</label>
+                        <div class="col-sm-12">
+                            <div class="panel">
+                                <div class="panel-body mh0">
+                                    <input
+                                            class="form-control"
+                                            type="email"
+                                            name="Email"
+                                            id="Email"
+                                            [(ngModel)]="business.email"
+                                            placeholder="Enter Email..."
+                                            required
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="col-sm-12 control-label custom"
+                        >{{ "Address" | translate }}
+                        </label>
+                        <div class="col-sm-12">
+                            <div class="panel">
+                                <div class="panel-body mh0">
+                  <textarea
+                          class="form-control"
+                          name="address"
+                          id="address"
+                          [(ngModel)]="business.address"
+                          required=""
+                          rows="3"
+                  ></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="col-sm-12 control-label custom">{{
+                            "Office Location" | translate
+                            }}</label>
+                        <div class="col-sm-12">
+                            <div class="panel">
+                                <div class="panel-body mh0">
+                                    <input
+                                            class="form-control"
+                                            name="officeLocation"
+                                            id="officeLocation"
+                                            [(ngModel)]="business.officeLocation"
+                                            type="text"
+                                            placeholder="Enter Office Location"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="col-sm-12 control-label custom">{{
+                            "Phone Number" | translate
+                            }}</label>
+                        <div class="col-sm-12">
+                            <div class="panel">
+                                <div class="panel-body mh0">
+                                    <input
+                                            class="form-control"
+                                            name="phoneNumber"
+                                            id="phoneNumber"
+                                            [(ngModel)]="business.phoneNumber"
+                                            type="number"
+                                            placeholder="Enter Phone Number"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="col-sm-12 control-label custom">{{
+                            "Store Name" | translate
+                            }}</label>
+                        <div class="col-sm-12">
+                            <div class="panel">
+                                <div class="panel-body mh0">
+                                    <input
+                                            class="form-control"
+                                            name="storeName"
+                                            id="storeName"
+                                            [(ngModel)]="business.storeName"
+                                            type="text"
+                                            placeholder="Enter Store Name"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <label class="col-sm-12 control-label custom"
+                        >{{ "About Us" | translate }}
+                        </label>
+                        <div class="col-sm-12">
+                            <div class="panel">
+                                <div class="panel-body mh0">
+                  <textarea
+                          class="form-control"
+                          name="aboutUs"
+                          id="aboutUs"
+                          [(ngModel)]="business.aboutUs"
+                          required=""
+                          rows="3"
+                  ></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="col-sm-12 control-label custom"
+                        >{{ "User App Logo Update" | translate }}
+                        </label>
+                        <div class="col-sm-12">
+                            <div class="row btn-upload">
+                                <div class="col-8">
+                                    <img
+                                            src="{{ appurl1 }}"
+                                            class="app-logo-img img-fluid"
+                                            alt="example placeholder avatar"
+                                    />
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <input
+                                            type="file"
+                                            class="upload"
+                                            accept="image1/*"
+                                            name="image"
+                                            (change)="appurl($event)"
+                                            name="app"
+                                    />
+                                    <button class="btn btn-info button-upload" type="button">
+                                        <i class="fa fa-upload" aria-hidden="true"></i> Upload file
+                                    </button>
+                                    <p class="resolution">Best resolution 490px*80px</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="col-sm-12 control-label custom"
+                        >{{ "WebApp Logo Update" | translate }}
+                        </label>
+                        <div class="col-sm-12">
+                            <div class="row btn-upload">
+                                <div class="col-8">
+                                    <img
+                                            src="{{ webAppurl1 }}"
+                                            class="webapp-logo-img img-fluid"
+                                            alt="example placeholder avatar"
+                                    />
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <input
+                                            type="file"
+                                            class="upload"
+                                            accept="image/*"
+                                            name="image"
+                                            (change)="webappurl($event)"
+                                            name="imageWeb"
+                                    />
+                                    <button class="btn btn-info button-upload" type="button">
+                                        <i class="fa fa-upload" aria-hidden="true"></i> Upload file
+                                    </button>
+                                    <p class="resolution">Best resolution 208px*36px</p>
+                                </div>
+                            </div>
+                        </div>
+                        <label class="col-sm-12 control-label custom"
+                        >{{ "Delivery Logo Update" | translate }}
+                        </label>
+                        <div class="col-sm-12">
+                            <div class="row btn-upload">
+                                <div class="col-8">
+                                    <img
+                                            src="{{ delivaryurl1 }}"
+                                            class="delivery-logo-img img-fluid"
+                                            alt="example placeholder avatar"
+                                    />
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <input
+                                            type="file"
+                                            class="upload"
+                                            accept="image/*"
+                                            name="image"
+                                            (change)="delivaryappurl($event)"
+                                            name="imagedelivary"
+                                    />
+                                    <button class="btn btn-info button-upload" type="button">
+                                        <i class="fa fa-upload" aria-hidden="true"></i> Upload file
+                                    </button>
+                                    <p class="resolution">Best resolution 490px*80px</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="col-sm-12 control-label custom">
+                            {{"DashBoard Logo Update" | translate}}
+                        </label>
+                        <div class="col-sm-12">
+                            <div class="row btn-upload">
+                                <div class="col-8">
+                                    <img
+                                            src="{{ dashboardurl1 }}"
+                                            class="dashboard-logo-img img-fluid"
+                                            alt="example placeholder avatar"
+                                    />
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <input
+                                            type="file"
+                                            class="upload"
+                                            accept="image/*"
+                                            name="image"
+                                            (change)="dashboardurl($event)"
+                                            name="imagedelivary"
+                                    />
+                                    <button class="btn btn-info button-upload" type="button">
+                                        <i class="fa fa-upload" aria-hidden="true"></i> Upload file
+                                    </button>
+                                    <p class="resolution">Best resolution 208px*36px</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="col-sm-12 control-label custom">
+                            Icon Image Update
+                        </label>
+                        <div class="col-sm-12">
+                            <div class="row btn-upload">
+                                <div class="col-8">
+                                    <img
+                                            src="{{ iconLogoUrl }}"
+                                            class="icon-img img-fluid"
+                                            alt="example placeholder avatar"
+                                    />
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <input
+                                            type="file"
+                                            class="upload"
+                                            accept="image/*"
+                                            name="image"
+                                            (change)="iconLogoUpload($event)"
+                                            name="imagedelivary"
+                                    />
+                                    <button class="btn btn-info button-upload" type="button">
+                                        <i class="fa fa-upload" aria-hidden="true"></i> Upload file
+                                    </button>
+                                    <p class="resolution">Best resolution 400px*400px</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <button
+                                    class="btn btn-primary pull-right form-btn add-modules"
+                                    type="submit"
+                                    data-style="expand-right"
+                                    name="submit" [disabled]="loading"
+                            >
+                                {{ "Submit" | translate }}
+                            </button>
+
+                            <button
+                                    class="btn btn-danger pull-right s-n-btn form-btn"
+                                    type="button"
+                                    name="cancel"
+                                    routerLink="/dashboard"
+                            >
+                                {{ "Cancel" | translate }}
+                            </button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

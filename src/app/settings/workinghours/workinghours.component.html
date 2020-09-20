@@ -1,0 +1,83 @@
+<div class="row text-left">
+  <div class="col-12">
+    <div class="card">
+      <form #f="ngForm" (ngSubmit)="onSubmit()">
+        <div class="row text-left">
+          <div class="col-md-8 offset-md-2">
+            <div class="container">
+              <div class="content-header text-primary text-center">
+                {{ "Store Time Setting" | translate }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-primary"></div>
+              <div class="col">
+                <section id="multiple-buttons">
+                  <div class="row text-left">
+                    <div class="col-sm-12 pull-right">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <button
+                                class="btn btn-raised add-button save-all"
+                                type="submit"
+                              >
+                                <i class="ft-plus"></i>
+                                &nbsp;
+                                {{ "Save All" | translate }}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            <div *ngFor="let data of workHours.workingHours; let i = index">
+              <div class="col">
+                <div class="card bg-success">
+                  <div class="card-content">
+                    <div class="px-3 py-3">
+                      <div class="media">
+                        <div class="media-body white text-left">
+                          <h3>{{ data.day }}</h3>
+                          <!-- <span>18/2/2019</span> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="container"
+                *ngFor="
+                  let data of workHours.workingHours[i].timeSchedule;
+                  let j = index
+                "
+              >
+                <div class="row">
+                  <div class="col-md-8">
+                    <p>{{ data.slot }}</p>
+                  </div>
+                  <div class="col-md-4">
+                    <ui-switch
+                      class="ng-untouched ng-pristine ng-valid switch"
+                      (change)="statusUpdate(data, data.isClosed, j)"
+                      [checked]="data.isClosed"
+                    >
+                    </ui-switch>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,174 @@
+<div class="row">
+  <div class="col text-primary">
+    <h2>{{ "Deals" | translate }}</h2>
+  </div>
+  <div class="col">
+    <!--Multiple buttons Starts-->
+    <section id="multiple-buttons">
+      <div class="row text-left">
+        <div class="col-sm-12 pull-right">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <button
+                    type="button"
+                    class="btn btn-raised add-button"
+                    [routerLink]="['/adddeal']"
+                    aria-label="Add"
+                  >
+                    <i class="ft-plus"></i> &nbsp;
+                    {{ "Add New Deal" | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--Multiple buttons Ends-->
+  </div>
+</div>
+
+<!--table starts-->
+<section id="ng-tables">
+  <div class="row text-left">
+    <div class="col-12">
+      <div class="card">
+        <!-- <div class="row text-left">
+                    <div class="col-12">
+                        <div class="content-header text-center text-primary">{{'Deal Details' | translate}}</div>
+                    </div>
+                </div> -->
+        <div class="card-content">
+          <div class="card-body">
+            <form>
+              <div class="form-group form-inline">
+                <form (keyup)="searchItems(siteName.value)">
+                  <input
+                    class="form-control searchinput filterSearch"
+                    type="text"
+                    name="siteVal"
+                    id="siteVal"
+                    placeholder="Search"
+                    #siteName
+                  />
+                </form>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">{{ "Name" | translate }}</th>
+                      <th scope="col" sortable="category">
+                        {{ "Category" | translate }}
+                      </th>
+                      <th scope="col" sortable="products">
+                        {{ "Product" | translate }}
+                      </th>
+                      <th scope="col" sortable="products">
+                        {{ "top-deal" | translate }}
+                      </th>
+                      <th scope="col" sortable="Edit">
+                        {{ "Edit" | translate }}
+                      </th>
+                      <th scope="col" sortable="Delete">
+                        {{ "Delete" | translate }}
+                      </th>
+                      <th scope="col" sortable="View">
+                        {{ "View" | translate }}
+                      </th>
+                      <th scope="col" sortable="View">
+                        {{ "Enable" | translate }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let data of dealsData
+                          | paginate
+                            : {
+                                itemsPerPage: limit,
+                                currentPage: p,
+                                totalItems: totalRecords
+                              };
+                        let i = index
+                      "
+                    >
+                      <td scope="row">{{ data.name }}</td>
+
+                      <td>
+                        <h6>{{ data.category ? data.category.title : "" }}</h6>
+                      </td>
+
+                      <td>
+                        <h6>{{ data.product ? data.product.title : "" }}</h6>
+                      </td>
+
+                      <td>
+                        <h6>{{ data.topDeal ? "Yes" : "No" }}</h6>
+                      </td>
+
+                      <td>
+                        <button
+                          type="button"
+                          class="btn btn-raised btn-success"
+                          [routerLink]="['/editdeal/' + data._id]"
+                          aria-label="Edit"
+                        >
+                          <i class="ft-edit-2"></i>
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-raised btn-danger"
+                          (click)="onDeleteProduct(data._id)"
+                          type="button"
+                        >
+                          <em class="fa fa-trash"></em>
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-raised btn-secondary"
+                          [routerLink]="['/viewdeal/' + data._id]"
+                          type="button"
+                        >
+                          <em _ngcontent-c10="" class="fa fa-eye"></em>
+                        </button>
+                      </td>
+
+                      <td>
+                        <ui-switch
+                          (change)="statusUpdate(data)"
+                          [(ngModel)]="data.status"
+                          name="statss{{ i }}"
+                        >
+                        </ui-switch>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="d-flex justify-content-between p-2">
+                <pagination-controls
+                  (pageChange)="pageChange($event)"
+                ></pagination-controls>
+                <!-- <select class=" custom-select" style="width: auto" name="pageSize">
+                                    <option>2 items per page</option>
+                                    <option>4 items per page</option>
+                                    <option>6 items per page</option>
+                                </select> -->
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--table ends-->

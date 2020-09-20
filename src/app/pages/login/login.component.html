@@ -1,0 +1,67 @@
+<!--Login Page Starts-->
+<section id="login">
+  <div class="container-fluid">
+    <div class="row full-height-vh m-0">
+      <div class="col-12 d-flex align-items-center justify-content-center">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body login-img">
+              <div class="row m-0">
+                <div class="col-lg-6 d-lg-block d-none py-2 px-3 text-center align-middle">
+                  <img src="../../assets/img/gallery/login.png" alt="" class="img-fluid mt-5" width="400"
+                    height="230" />
+                </div>
+                <div class="col-lg-6 col-md-12 bg-white px-4 pt-3">
+                  <h4 class="card-title mb-2">Login</h4>
+                  <p class="card-text mb-3">
+                    Welcome back, please login to your account.
+                  </p>
+
+                  <form #f="ngForm" (ngSubmit)="loginSubmitData(f)">
+
+                    <input type="text" class="form-control mb-3" placeholder="Enter Email-id" name="emailidd"
+                      id="emailidd" [(ngModel)]="loginDetails.email" #emailidd="ngModel"
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+                    <div class="alert alert-danger" *ngIf="emailidd.touched && emailidd.invalid">
+                      <div *ngIf="emailidd.errors.required">Email is required</div>
+                      <div *ngIf="emailidd.errors.pattern">Email must be a valid email address</div>
+                    </div>
+
+
+                    <input type="password" class="form-control mb-3" minlength="6" maxlength="10" placeholder="Password"
+                      name="passw" [(ngModel)]="loginDetails.password" #passw="ngModel" required />
+                    <div class="alert alert-danger" *ngIf="passw.touched && passw.invalid">
+                      <div *ngIf="passw.errors.required">This Feild is required</div>
+                      <div *ngIf="passw.errors.minlength">Minimum length should be atleast 6 characters</div>
+                      <div *ngIf="passw.errors.maxlength">maximun length should be atleast 10 characters long</div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+
+                      <div class="forgot-password-option">
+                        <a [routerLink]="['/forgot-password']" class="text-decoration-none text-primary">Forgot
+                          Password ?</a>
+                      </div>
+                    </div>
+
+                    <div class="fg-actions d-flex justify-content-between">
+                   
+                      <div class="recover-pass">
+                        <button class="btn add-modules" [disabled]="f.invalid">
+                          <a type="submit" class="text -decoration-none text-white">Login</a>
+                        </button>
+                      </div>
+                    </div>
+
+                  </form>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Login Page Ends-->

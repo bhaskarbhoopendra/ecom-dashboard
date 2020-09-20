@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card bg-primary">
+            <div class="card-body">
+                <div class="card-block pt-2 pb-0">
+                    <div class="media">
+                        <div class="media-body white text-left">
+                            <h3 class="font-large-1 mb-0">{{counts.totalEarnings | currency:dataInfo.currencyCode:'symbol'}}</h3>
+                            <span>{{'Total Earnings' | translate}}</span>
+                        </div>
+                        <div class="media-right white text-right">
+                            <i class="icon-bulb font-large-1"></i>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card bg-warning">
+            <div class="card-body">
+                <div class="card-block pt-2 pb-0">
+                    <div class="media">
+                        <div class="media-body white text-left">
+                            <h3 class="font-large-1 mb-0">{{counts.totalOrders}}</h3>
+                            <span>{{'Total Orders' | translate}}</span>
+                        </div>
+                        <div class="media-right white text-right">
+                            <i class="icon-pie-chart font-large-1"></i>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card bg-success">
+            <div class="card-body">
+                <div class="card-block pt-2 pb-0">
+                    <div class="media">
+                        <div class="media-body white text-left">
+                            <h3 class="font-large-1 mb-0">{{counts.totalProducts}}</h3>
+                            <span>{{'Products' | translate}}</span>
+                        </div>
+                        <div class="media-right white text-right">
+                            <i class="icon-graph font-large-1"></i>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card bg-danger">
+            <div class="card-body">
+                <div class="card-block pt-2 pb-0">
+                    <div class="media">
+                        <div class="media-body white text-left">
+                            <h3 class="font-large-1 mb-0">{{counts.totalCategories}}</h3>
+                            <span>{{'Categories' | translate}}</span>
+                        </div>
+                        <div class="media-right white text-right">
+                            <i class="icon-wallet font-large-1"></i>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 bar-block">
+        <ngx-charts-bar-vertical [view]="view" [results]="graphData" [scheme]="colorScheme" [gradient]="gradient"
+                                 [xAxis]="showXAxis" [yAxis]="showYAxis" [showXAxisLabel]="true" [showYAxisLabel]="true"
+                                 [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel">
+
+        </ngx-charts-bar-vertical>
+    </div>
+    <div class="col-md-12 bar-block">
+        <ngx-charts-pie-chart [view]="view" [results]="graphData" [scheme]="colorScheme" [gradient]="gradient"
+                              [labels]="false" [legend]="false"></ngx-charts-pie-chart>
+    </div>
+</div>

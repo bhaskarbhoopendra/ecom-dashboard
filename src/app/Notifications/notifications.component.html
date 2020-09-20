@@ -1,0 +1,43 @@
+<div class="row text-left">
+    <div class="col-sm-12">
+        <div class="content-header text-center text-primary" translate>Notifications</div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card ">
+            <div class="card-header pb-2">
+            </div>
+            <div class="card-content">
+                <div class="px-3">
+                    <div class="form">
+                        <form (ngSubmit)="sendNotification()" #notificationForm="ngForm">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label translate>Title</label>
+                                    <input class="form-control" type="text" name="title"
+                                           [(ngModel)]="notificationData.title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label translate>Description</label>
+                                    <textarea class="form-control" [rows]="3" name="desc"
+                                              [(ngModel)]="notificationData.mssg" required>
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            <div class=" form-actions">
+                                <button type="submit" class="btn btn-raised btn-raised add-modules mr-2"
+                                        [disabled]="notificationForm.invalid">
+                                    <i class="fa fa-check-square-o"></i> {{'Submit' | translate}}
+                                </button>
+                                <button type="button" class="btn btn-raised btn-raised btn-warning mr-1"
+                                        routerLink="/dashboard">
+                                    <i class="ft-x"></i> {{'Cancel' | translate}}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
